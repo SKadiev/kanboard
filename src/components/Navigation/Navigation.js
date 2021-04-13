@@ -1,16 +1,19 @@
 import React from 'react';
 import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const Navigation = (props) => {
   return (
     <React.Fragment>
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="#home">{props.navTitle}</Navbar.Brand>
+        <LinkContainer to="/">
+          <Navbar.Brand>{props.navTitle}</Navbar.Brand>
+        </LinkContainer>
         <Nav className="mr-auto">
           {props.navItems.map((el) => (
-            <Nav.Link key={el.title} href={el.href}>
-              {el.title}
-            </Nav.Link>
+            <LinkContainer key={el.title} to={el.href}>
+              <Nav.Link> {el.title}</Nav.Link>
+            </LinkContainer>
           ))}
         </Nav>
         <Form inline>
