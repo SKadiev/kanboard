@@ -2,6 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import Button from './components/UI/Button/Button';
 import Modal from './components/UI/Modal/Modal';
+import Navigation from './components/Navigation/Navigation';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -9,8 +11,14 @@ import ReactDOM from 'react-dom';
 function App() {
   const [modalShow, setModalShow] = React.useState(false);
 
+  const [navigationItems, setNavigationItems] = React.useState([
+    { title: 'projects', href: '/projects' },
+    { title: 'members', href: '/members' },
+  ]);
+
   return (
     <React.Fragment>
+      <Navigation navTitle="Kanboard" navItems={navigationItems}></Navigation>
       <Button
         value="Click"
         clicked={() => {
