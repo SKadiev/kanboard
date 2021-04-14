@@ -1,54 +1,20 @@
 import React from 'react';
 import Modal from '../../components/UI/Modal/Modal';
 import Button from '../../components/UI/Button/Button';
-import { Row, Col, Container } from 'react-bootstrap';
+import LayoutComponentGenerator from '../../hoc/LayoutComponentGenerator/LayoutComponentGenerator';
 import ReactDOM from 'react-dom';
-import styles from './Projects.module.css';
+import Project from './Project';
 
-const projects = ['tote', 'koce', 'lile', 'dzole', 'boce'];
-
-const generateRow = (columnList, id) => {
-  return <Row key={id}>{columnList}</Row>;
-};
-
-const alignProjectRowsLayout = (projects) => {
-  const rowsOrderedList = [];
-
-  projects.forEach((projectName, index) => {
-    if (index + 1 === projects.length && index !== 0 && (index + 1) % 2 !== 0) {
-      rowsOrderedList.push(
-        generateRow(
-          <Col md={{ span: 6 }}>
-            <div className={styles.Projects}> {projectName}</div>
-          </Col>,
-          projectName + index
-        )
-      );
-    } else if ((index + 1) % 2 === 0 && index !== 0) {
-      rowsOrderedList[index - 1] = generateRow(
-        [
-          <Col key={projectName + (index - 1)}>
-            <div className={styles.Projects}> {projects[index - 1]}</div>
-          </Col>,
-          <Col key={projectName + index}>
-            <div className={styles.Projects}>{projectName}</div>
-          </Col>,
-        ],
-        projectName + index
-      );
-    }
-  });
-  return rowsOrderedList;
-};
-
+const project = [
+  { name: 'Alo belanacc' },
+  { name: 'Ne bidi 5 dena na kamsss be sinee' },
+  { name: 'dasdasdas' },
+  { name: 'dasdasdas' },
+];
 const Projects = (props) => {
   const [modalShow, setModalShow] = React.useState(false);
-
-  console.log(alignProjectRowsLayout(projects));
   return (
     <React.Fragment>
-      <h1>Projects</h1>
-
       <Button
         variant="primary"
         clicked={() => setModalShow(true)}
@@ -56,16 +22,15 @@ const Projects = (props) => {
       />
       {ReactDOM.createPortal(
         <Modal
-          title="Projects"
+          title="Memebers"
           show={modalShow}
           onHide={() => setModalShow(false)}
         >
-          Projects
+          Members
         </Modal>,
         document.getElementById('modal-content')
       )}
-
-      <Container fluid>{alignProjectRowsLayout(projects)}</Container>
+      {LayoutComponentGenerator(Project, project)()}
     </React.Fragment>
   );
 };

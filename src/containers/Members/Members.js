@@ -1,13 +1,16 @@
 import React from 'react';
 import Modal from '../../components/UI/Modal/Modal';
 import Button from '../../components/UI/Button/Button';
+import LayoutComponentGenerator from '../../hoc/LayoutComponentGenerator/LayoutComponentGenerator';
 import ReactDOM from 'react-dom';
-const Projects = (props) => {
-  const [modalShow, setModalShow] = React.useState(false);
+import { Container } from 'react-bootstrap';
+import Member from './Member';
 
+const members = [{ name: 'dzole' }, { name: 'koce' }, { name: 'koceee' }];
+const Members = (props) => {
+  const [modalShow, setModalShow] = React.useState(false);
   return (
     <React.Fragment>
-      <h1>Members</h1>
       <Button
         variant="primary"
         clicked={() => setModalShow(true)}
@@ -15,7 +18,7 @@ const Projects = (props) => {
       />
       {ReactDOM.createPortal(
         <Modal
-          title="Members"
+          title="Memebers"
           show={modalShow}
           onHide={() => setModalShow(false)}
         >
@@ -23,8 +26,9 @@ const Projects = (props) => {
         </Modal>,
         document.getElementById('modal-content')
       )}
+      {LayoutComponentGenerator(Member, members)()}
     </React.Fragment>
   );
 };
 
-export default Projects;
+export default Members;
