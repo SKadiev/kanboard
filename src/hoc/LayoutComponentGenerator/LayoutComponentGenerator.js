@@ -23,8 +23,7 @@ const LayoutComponentGenerator = (Component, componentPayload) => {
           generateRow(
             <Col md={{ span: 6 }}>
               <div className={styles.Projects}>
-                {' '}
-                <Component {...component} />{' '}
+                <Component {...component} />
               </div>
             </Col>,
             component.name + index

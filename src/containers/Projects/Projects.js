@@ -4,35 +4,58 @@ import Button from '../../components/UI/Button/Button';
 import LayoutComponentGenerator from '../../hoc/LayoutComponentGenerator/LayoutComponentGenerator';
 import ReactDOM from 'react-dom';
 import Project from './Project';
+import axios from '../../axios';
+import { useState, useEffect } from 'react';
+import { Spinner } from 'react-spinners-css';
 
-const project = [
-  { name: 'Alo belanacc' },
-  { name: 'Ne bidi 5 dena na kamsss be sinee' },
-  { name: 'dasdasdas' },
-  { name: 'dasdasdas' },
-];
 const Projects = (props) => {
-  const [modalShow, setModalShow] = React.useState(false);
-  return (
-    <React.Fragment>
-      <Button
-        variant="primary"
-        clicked={() => setModalShow(true)}
-        value="Open modal"
-      />
-      {ReactDOM.createPortal(
-        <Modal
-          title="Memebers"
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-        >
-          Members
-        </Modal>,
-        document.getElementById('modal-content')
-      )}
-      {LayoutComponentGenerator(Project, project)()}
-    </React.Fragment>
+  const [projects, setProjects] = useState(null);
+  const [projectsOutput, setProjectsOutput] = useState(
+    <Spinner color="blue" />
   );
+  const [modalShow, setModalShow] = React.useState(false);
+
+  useEffect(() => {
+    axios
+      .get('projects.json')
+      .then((res) => {
+        setProjects(
+          res.data.split(',').map((member) => {
+            return {
+              name: member,
+            };
+          })
+        );
+      })
+      .catch((e) => setProjectsOutput(<p>Error</p>));
+  }, []);
+
+  useEffect(() => {
+    if (projects !== null) {
+      setProjectsOutput(
+        <React.Fragment>
+          <Button
+            variant="primary"
+            clicked={() => setModalShow(true)}
+            value="Open modal"
+          />
+          {ReactDOM.createPortal(
+            <Modal
+              title="Projects"
+              show={modalShow}
+              onHide={() => setModalShow(false)}
+            >
+              Projects
+            </Modal>,
+            document.getElementById('modal-content')
+          )}
+          {LayoutComponentGenerator(Project, projects)()}
+        </React.Fragment>
+      );
+    }
+  }, [projects, modalShow]);
+
+  return projectsOutput;
 };
 
 export default Projects;
