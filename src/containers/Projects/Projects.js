@@ -4,7 +4,7 @@ import Button from '../../components/UI/Button/Button';
 import LayoutComponentGenerator from '../../hoc/LayoutComponentGenerator/LayoutComponentGenerator';
 import ReactDOM from 'react-dom';
 import Project from './Project';
-import axios from '../../axios';
+import ProjectForm from './ProjectForm';
 import { useState, useEffect } from 'react';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,7 +17,7 @@ import {
 
 const Projects = (props) => {
   const [projectsOutput, setProjectsOutput] = useState(<Spinner />);
-  const [modalShow, setModalShow] = React.useState(false);
+  const [addModalShow, setAddModalShow] = React.useState(false);
   const dispatch = useDispatch();
   const projects = useSelector((state) => {
     return state.projectsState.projects;
@@ -33,16 +33,16 @@ const Projects = (props) => {
         <React.Fragment>
           <Button
             variant="primary"
-            clicked={() => setModalShow(true)}
-            value="Open modal"
+            clicked={() => setAddModalShow(true)}
+            value="Add Project"
           />
           {ReactDOM.createPortal(
             <Modal
-              title="Projects"
-              show={modalShow}
-              onHide={() => setModalShow(false)}
+              title="Add Project"
+              show={addModalShow}
+              onHide={() => setAddModalShow(false)}
             >
-              Projects
+              <ProjectForm />
             </Modal>,
             document.getElementById('modal-content')
           )}
@@ -50,7 +50,7 @@ const Projects = (props) => {
         </React.Fragment>
       );
     }
-  }, [projects, modalShow]);
+  }, [projects, addModalShow]);
 
   return projectsOutput;
 };

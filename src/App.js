@@ -9,8 +9,8 @@ import { Route, Switch } from 'react-router-dom';
 // show props and onHile
 function App() {
   const [navigationItems, setNavigationItems] = React.useState([
-    { title: 'projects', href: '/projects' },
     { title: 'members', href: '/members' },
+    { title: 'projects', href: '/projects' },
   ]);
 
   return (

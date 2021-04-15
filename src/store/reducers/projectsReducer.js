@@ -9,6 +9,10 @@ const setProjects = (state, action) => {
   return updateObject(state, { projects: action.projects });
 };
 
+const addProject = (state, action) => {
+  return updateObject(state, { projects: action.projects });
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.SET_PROJECTS:

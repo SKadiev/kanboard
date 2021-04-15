@@ -11,7 +11,7 @@ export const setMembers = (members) => {
 export const fetchMembersFailed = () => {
   return {
     type: actions.FETCH_MEMBERS_FAILED,
-    result: <p>Error</p>,
+    result: <p>Error loading members</p>,
   };
 };
 

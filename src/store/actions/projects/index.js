@@ -8,9 +8,17 @@ export const setProjects = (projects) => {
   };
 };
 
-export const fetchProjectsFailed = (ingredients) => {
+export const fetchProjectsFailed = () => {
   return {
     type: actions.FETCH_PROJECTS_FAILED,
+    result: <p>Error loading projects</p>,
+  };
+};
+
+export const addProject = (project) => {
+  return {
+    type: actions.ADD_PROJECT,
+    project,
   };
 };
 
