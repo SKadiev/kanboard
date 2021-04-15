@@ -6,11 +6,11 @@ import ReactDOM from 'react-dom';
 import Member from './Member';
 import axios from '../../axios';
 import { useState, useEffect } from 'react';
-import { Spinner } from 'react-spinners-css';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 const Members = (props) => {
   const [members, setMembers] = useState(null);
-  const [membersOutput, setMembersOutput] = useState(<Spinner color="blue" />);
+  const [membersOutput, setMembersOutput] = useState(<Spinner />);
   const [modalShow, setModalShow] = React.useState(false);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const Members = (props) => {
           />
           {ReactDOM.createPortal(
             <Modal
-              title="Memebers"
+              title="Members"
               show={modalShow}
               onHide={() => setModalShow(false)}
             >

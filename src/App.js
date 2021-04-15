@@ -2,6 +2,7 @@ import './App.css';
 import Navigation from './components/Navigation/Navigation';
 import Members from './containers/Members/Members';
 import Projects from './containers/Projects/Projects';
+import Home from './containers/Home/Home';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
@@ -16,8 +17,9 @@ function App() {
     <React.Fragment>
       <Navigation navTitle="Kanboard" navItems={navigationItems}></Navigation>
       <Switch>
-        <Route path="/projects" exact component={Projects} />
-        <Route path="/members" exact component={Members} />
+        <Route path="/projects" component={Projects} />
+        <Route path="/members" component={Members} />
+        <Route path="/" exact component={Home} />
       </Switch>
     </React.Fragment>
   );

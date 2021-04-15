@@ -6,13 +6,11 @@ import ReactDOM from 'react-dom';
 import Project from './Project';
 import axios from '../../axios';
 import { useState, useEffect } from 'react';
-import { Spinner } from 'react-spinners-css';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 const Projects = (props) => {
   const [projects, setProjects] = useState(null);
-  const [projectsOutput, setProjectsOutput] = useState(
-    <Spinner color="blue" />
-  );
+  const [projectsOutput, setProjectsOutput] = useState(<Spinner />);
   const [modalShow, setModalShow] = React.useState(false);
 
   useEffect(() => {
