@@ -7,29 +7,26 @@ import Member from './Member';
 import axios from '../../axios';
 import { useState, useEffect } from 'react';
 import Spinner from '../../components/UI/Spinner/Spinner';
-
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setMembers,
+  initMembers,
+  fetchMembersFailed,
+} from '../../store/actions/';
 const Members = (props) => {
-  const [members, setMembers] = useState(null);
   const [membersOutput, setMembersOutput] = useState(<Spinner />);
   const [modalShow, setModalShow] = React.useState(false);
+  const dispatch = useDispatch();
+  const members = useSelector((state) => {
+    return state.membersState.members;
+  });
 
   useEffect(() => {
-    axios
-      .get('members.json')
-      .then((res) => {
-        setMembers(
-          res.data.split(',').map((member) => {
-            return {
-              name: member,
-            };
-          })
-        );
-      })
-      .catch((e) => setMembersOutput(<p>Error</p>));
+    dispatch(initMembers());
   }, []);
 
   useEffect(() => {
-    if (members !== null) {
+    if (members.length !== 0) {
       setMembersOutput(
         <React.Fragment>
           <Button

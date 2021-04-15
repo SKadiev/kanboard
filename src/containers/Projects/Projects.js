@@ -7,29 +7,28 @@ import Project from './Project';
 import axios from '../../axios';
 import { useState, useEffect } from 'react';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import { useDispatch, useSelector } from 'react-redux';
+
+import {
+  setProjects,
+  initProjects,
+  fetchProjectsFailed,
+} from '../../store/actions/';
 
 const Projects = (props) => {
-  const [projects, setProjects] = useState(null);
   const [projectsOutput, setProjectsOutput] = useState(<Spinner />);
   const [modalShow, setModalShow] = React.useState(false);
+  const dispatch = useDispatch();
+  const projects = useSelector((state) => {
+    return state.projectsState.projects;
+  });
 
   useEffect(() => {
-    axios
-      .get('projects.json')
-      .then((res) => {
-        setProjects(
-          res.data.split(',').map((member) => {
-            return {
-              name: member,
-            };
-          })
-        );
-      })
-      .catch((e) => setProjectsOutput(<p>Error</p>));
+    dispatch(initProjects());
   }, []);
 
   useEffect(() => {
-    if (projects !== null) {
+    if (projects.length !== 0) {
       setProjectsOutput(
         <React.Fragment>
           <Button

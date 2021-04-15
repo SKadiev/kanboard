@@ -7,14 +7,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
-import memberReducer from './store/reducers/membersReducer';
-import projectReducer from './store/reducers/projectReducer';
+import membersReducer from './store/reducers/membersReducer';
+import projectsReducer from './store/reducers/projectsReducer';
+import thunk from 'redux-thunk';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-  members: memberReducer,
-  projects: projectReducer,
+  membersState: membersReducer,
+  projectsState: projectsReducer,
 });
 
 const store = createStore(
@@ -23,14 +24,15 @@ const store = createStore(
 );
 
 ReactDOM.render(
-  <Provider store={store}>
-    <React.StrictMode>
+  <React.StrictMode>
+    <Provider store={store}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </React.StrictMode>
-    , document.getElementById('root')
-  </Provider>
+    </Provider>
+    ,
+  </React.StrictMode>,
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

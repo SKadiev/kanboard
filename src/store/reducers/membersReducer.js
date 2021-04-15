@@ -6,14 +6,16 @@ const initialState = {
   members: [],
 };
 
-const setProjects = (state, action) => {
-  return updateObject(state, { members: state.projects });
+const setMembers = (state, action) => {
+  return updateObject(state, { members: action.members });
 };
 
-const reducer = (state, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actions.FETCH_PROJECTS:
-      return setProjects(state.projects, actions);
+    case actions.SET_MEMBERS:
+      return setMembers(state, action);
+    case actions.FETCH_MEMBERS_FAILED:
+    //   return setMembers(state.projectsState, actions);
     default:
       return state;
   }

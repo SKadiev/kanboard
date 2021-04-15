@@ -1,25 +1,31 @@
 import * as actions from '../actionTypes';
+import axios from '../../../axios';
 
-export const setMembers = (members) => {
+export const setProjects = (projects) => {
   return {
-    type: actions.SET_MEMBERS,
-    members,
+    type: actions.SET_PROJECTS,
+    projects,
   };
 };
 
-export const fetchMembersFailed = (ingredients) => {
+export const fetchProjectsFailed = (ingredients) => {
   return {
     type: actions.FETCH_PROJECTS_FAILED,
   };
 };
 
-export const initMembers = () => {
+export const initProjects = () => {
   return (dispatch) => {
     axios.get('/projects.json').then((response) => {
       if (response.data) {
-        dispatch(setMembers(response.data));
+        let resData = response.data.split(',').map((project) => {
+          return {
+            name: project,
+          };
+        });
+        dispatch(setProjects(resData));
       } else {
-        dispatch(fetchMembersFailed());
+        dispatch(fetchProjectsFailed());
       }
     });
   };
