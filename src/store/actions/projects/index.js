@@ -22,6 +22,12 @@ export const addProject = (project) => {
   };
 };
 
+export const fetchProjectsFinished = () => {
+  return {
+    type: actions.FETCH_PROJECTS_FINISHED,
+  };
+};
+
 export const initProjects = () => {
   return (dispatch) => {
     axios.get('/projects.json').then((response) => {

@@ -12,6 +12,7 @@ import {
   setMembers,
   initMembers,
   fetchMembersFailed,
+  fetchMembersFinished,
 } from '../../store/actions/';
 const Members = (props) => {
   const [membersOutput, setMembersOutput] = useState(<Spinner />);
@@ -20,7 +21,7 @@ const Members = (props) => {
   const members = useSelector((state) => {
     return state.membersState.members;
   });
-
+  //
   useEffect(() => {
     dispatch(initMembers());
   }, []);
@@ -47,8 +48,26 @@ const Members = (props) => {
           {LayoutComponentGenerator(Member, members)()}
         </React.Fragment>
       );
+      dispatch(fetchMembersFinished());
     }
   }, [members, modalShow]);
+
+  // useEffect(() => {
+  //   if (loaded) {
+  //     welcomeMessage = (
+  //       <h1>
+  //         <strong>WELCOME TO MEMBERS</strong>
+  //       </h1>
+  //     );
+  //     setTimeout(() => {
+  //       setMembersOutput(
+  //         [welcomeMessage, membersOutput].map((el, index) => {
+  //           return React.cloneElement(el, { key: index });
+  //         })
+  //       );
+  //     }, 1000);
+  //   }
+  // }, [loaded]);
 
   return membersOutput;
 };

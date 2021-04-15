@@ -4,6 +4,7 @@ import { updateObject } from '../utility';
 
 const initialState = {
   members: [],
+  loaded: false,
 };
 
 const setMembers = (state, action) => {
@@ -14,12 +15,18 @@ const fetchMembersFailed = (state, action) => {
   return updateObject(state, { members: action.members });
 };
 
+const fetchMembersFinished = (state, action) => {
+  return updateObject(state, { loaded: true });
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.SET_MEMBERS:
       return setMembers(state, action);
     case actions.FETCH_MEMBERS_FAILED:
-    //   return setMembers(state.projectsState, actions);
+      return '';
+    case actions.FETCH_MEMBERS_FINISHED:
+      return fetchMembersFinished(state, action);
     default:
       return state;
   }

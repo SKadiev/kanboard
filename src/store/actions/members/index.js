@@ -15,6 +15,12 @@ export const fetchMembersFailed = () => {
   };
 };
 
+export const fetchMembersFinished = () => {
+  return {
+    type: actions.FETCH_MEMBERS_FINISHED,
+  };
+};
+
 export const initMembers = () => {
   return (dispatch) => {
     axios.get('/members.json').then((response) => {
