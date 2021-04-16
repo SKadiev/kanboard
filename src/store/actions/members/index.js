@@ -21,6 +21,41 @@ export const fetchMembersFinished = () => {
   };
 };
 
+export const setMember = (member) => {
+  return {
+    type: actions.SET_MEMBER,
+    member,
+  };
+};
+
+export const addMemberFailed = (project) => {
+  return {
+    type: actions.ADD_MEMBER_FAILED,
+    project,
+  };
+};
+
+
+export const addNewMember = (currenMembers, member) => {
+  return (dispatch) => {
+    axios
+      .put(
+        '/members.json',
+        JSON.stringify(
+          currenMembers.map((e) => e.name).join(',') + ', ' + member
+        )
+      )
+      .then((response) => {
+        if (response.data) {
+          dispatch(setMember({ name: member }));
+        } else {
+          dispatch(addMemberFailed());
+        }
+      });
+  };
+};
+
+
 export const initMembers = () => {
   return (dispatch) => {
     axios.get('/members.json').then((response) => {

@@ -45,11 +45,7 @@ const Projects = (props) => {
               show={addModalShow}
               onHide={() => setAddModalShow(false)}
             >
-              <ProjectForm
-                onSubmit={() => {
-                  dispatch();
-                }}
-              />
+              <ProjectForm />
             </Modal>,
             document.getElementById('modal-content')
           )}

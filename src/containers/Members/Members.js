@@ -4,7 +4,7 @@ import Button from '../../components/UI/Button/Button';
 import LayoutComponentGenerator from '../../hoc/LayoutComponentGenerator/LayoutComponentGenerator';
 import ReactDOM from 'react-dom';
 import Member from './Member';
-import axios from '../../axios';
+import MemberForm from './MemberForm';
 import { useState, useEffect } from 'react';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,14 +14,16 @@ import {
   fetchMembersFailed,
   fetchMembersFinished,
 } from '../../store/actions/';
+
 const Members = (props) => {
   const [membersOutput, setMembersOutput] = useState(<Spinner />);
-  const [modalShow, setModalShow] = React.useState(false);
+    const [addModalShow, setAddModalShow] = React.useState(false);
+
   const dispatch = useDispatch();
   const members = useSelector((state) => {
     return state.membersState.members;
   });
-  //
+  
   useEffect(() => {
     dispatch(initMembers());
   }, []);
@@ -32,16 +34,16 @@ const Members = (props) => {
         <React.Fragment>
           <Button
             variant="primary"
-            clicked={() => setModalShow(true)}
-            value="Open modal"
+            clicked={() => setAddModalShow(true)}
+            value="Add Member"
           />
           {ReactDOM.createPortal(
             <Modal
               title="Members"
-              show={modalShow}
-              onHide={() => setModalShow(false)}
+              show={addModalShow}
+              onHide={() => setAddModalShow(false)}
             >
-              Members
+              <MemberForm />
             </Modal>,
             document.getElementById('modal-content')
           )}
@@ -50,7 +52,7 @@ const Members = (props) => {
       );
       dispatch(fetchMembersFinished());
     }
-  }, [members, modalShow]);
+  }, [members, addModalShow]);
 
   // useEffect(() => {
   //   if (loaded) {
