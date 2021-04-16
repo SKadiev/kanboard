@@ -40,15 +40,18 @@ export const setProject = (project) => {
   };
 };
 
-export const addNewProject = (project) => {
+export const addNewProject = (currentProjects,project) => {
+  console.log(currentProjects)
   return (dispatch) => {
-    axios.put('/projects.json', JSON.stringify(project)).then((response) => {
-      if (response.data) {
-        dispatch(setProject(project));
-      } else {
-        dispatch(addProjectFailed());
-      }
-    });
+    axios
+      .put('/projects.json', JSON.stringify(currentProjects.map(e => e.name).join(',') + ', ' + project))
+      .then((response) => {
+        if (response.data) {
+          dispatch(setProject({ name: project }));
+        } else {
+          dispatch(addProjectFailed());
+        }
+      });
   };
 };
 
