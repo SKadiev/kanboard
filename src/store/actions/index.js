@@ -9,6 +9,6 @@ export {
   setProjects,
   fetchProjectsFailed,
   initProjects,
-  addProject,
+  addNewProject,
   fetchProjectsFinished,
 } from './projects';

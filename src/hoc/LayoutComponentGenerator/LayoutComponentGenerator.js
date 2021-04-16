@@ -14,6 +14,18 @@ const LayoutComponentGenerator = (Component, componentPayload) => {
     const rowsOrderedList = [];
 
     components.forEach((component, index) => {
+      if (components.length === 1) {
+        rowsOrderedList.push(
+          generateRow(
+            <Col md={{ span: 6 }}>
+              <div className={styles.Projects}>
+                <Component {...component} />
+              </div>
+            </Col>,
+            component.name + index
+          )
+        );
+      }
       if (
         index + 1 === components.length &&
         index !== 0 &&
@@ -41,12 +53,13 @@ const LayoutComponentGenerator = (Component, componentPayload) => {
               <div className={styles.Projects}>
                 <Component {...component} />
               </div>
-            </Col>,
+            </Col>
           ],
           component.name + index
         );
       }
     });
+    console.log(rowsOrderedList)
     return rowsOrderedList;
   };
 

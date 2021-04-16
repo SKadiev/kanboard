@@ -15,10 +15,15 @@ export const fetchProjectsFailed = () => {
   };
 };
 
-export const addProject = (project) => {
+export const addProjectFailed = () => {
   return {
-    type: actions.ADD_PROJECT,
-    project,
+    type: actions.ADD_PROJECT_FAILED,
+  };
+};
+
+export const addProjectSuccess = () => {
+  return {
+    type: actions.ADD_PROJECT_SUCCESS,
   };
 };
 
@@ -28,15 +33,39 @@ export const fetchProjectsFinished = () => {
   };
 };
 
+export const setProject = (project) => {
+  return {
+    type: actions.SET_PROJECT,
+    project,
+  };
+};
+
+export const addNewProject = (project) => {
+  return (dispatch) => {
+    axios.put('/projects.json', JSON.stringify(project)).then((response) => {
+      if (response.data) {
+        dispatch(setProject(project));
+      } else {
+        dispatch(addProjectFailed());
+      }
+    });
+  };
+};
+
 export const initProjects = () => {
   return (dispatch) => {
     axios.get('/projects.json').then((response) => {
       if (response.data) {
-        let resData = response.data.split(',').map((project) => {
-          return {
-            name: project,
-          };
-        });
+        let resData = null;
+        if (response.data.indexOf(',') === -1) {
+          resData = [{ name: response.data }];
+        } else {
+          resData = response.data.split(',').map((project) => {
+            return {
+              name: project,
+            };
+          });
+        }
         dispatch(setProjects(resData));
       } else {
         dispatch(fetchProjectsFailed());

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import axios from '../../axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { addNewProject } from '../../store/actions/';
 
 const ProjectForm = (props) => {
   const [inputValue, setInputValue] = useState('');
+  const dispatch = useDispatch();
 
   const onSumbit = (event) => {
     event.preventDefault();
-    console.log(inputValue);
+    dispatch(addNewProject(inputValue));
   };
 
   return (

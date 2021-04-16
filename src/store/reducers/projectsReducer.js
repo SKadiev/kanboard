@@ -1,3 +1,4 @@
+import { fetchProjectsFinished } from '../actions';
 import * as actions from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
@@ -10,23 +11,26 @@ const setProjects = (state, action) => {
   return updateObject(state, { projects: action.projects });
 };
 
-const addProject = (state, action) => {
+const setProject = (state, action) => {
   return updateObject(state, {
-    projects: [...state.projectsState.projects, action.project],
+    projects: [...state.projects, action.project],
   });
 };
 
 const fetchProjectFinished = (state, action) => {
   return updateObject(state, { loaded: true });
 };
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.SET_PROJECTS:
-      return setProjects(state.projectsState, action);
+      return setProjects(state, action);
     case actions.FETCH_PROJECTS_FAILED:
       throw new Error();
-    case actions.ADD_PROJECT:
-    case actions.FETCH_MEMBERS_FINISHED:
+    case actions.SET_PROJECT:
+      return setProject(state, action);
+    case actions.FETCH_PROJECTS_FINISHED:
+      return fetchProjectFinished(state, action);
     default:
       return state;
   }
