@@ -13,7 +13,7 @@ const ProjectForm = (props) => {
 
   const onSumbit = (event) => {
     event.preventDefault();
-    dispatch(addNewProject( projects, projectValue));
+    dispatch(addNewProject( projectValue));
   };
 
   return (

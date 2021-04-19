@@ -4,20 +4,30 @@ import axios from '../../../axios';
 export const setProjects = (projects) => {
   return {
     type: actions.SET_PROJECTS,
-    projects,
+    projects
   };
 };
 
-export const fetchProjectsFailed = () => {
+export const fetchProjectsFailed = (err) => {
   return {
     type: actions.FETCH_PROJECTS_FAILED,
     result: <p>Error loading projects</p>,
+    err
   };
 };
 
-export const addProjectFailed = () => {
+
+export const projectsEmpty = () => {
+  return {
+    type: actions.PROJECTS_EMPTY,
+    message: 'No Projects',
+  };
+};
+
+export const addProjectFailed = (err) => {
   return {
     type: actions.ADD_PROJECT_FAILED,
+    err
   };
 };
 
@@ -40,39 +50,42 @@ export const setProject = (project) => {
   };
 };
 
-export const addNewProject = (currentProjects,project) => {
-  console.log(currentProjects)
-  return (dispatch) => {
-    axios
-      .put('/projects.json', JSON.stringify(currentProjects.map(e => e.name).join(',') + ', ' + project))
-      .then((response) => {
-        if (response.data) {
-          dispatch(setProject({ name: project }));
-        } else {
-          dispatch(addProjectFailed());
-        }
-      });
-  };
+export const addNewProject = (project) => {
+ 
+ const projectData = {
+   id: project + '_' + new Date().getTime(),
+   name: project,
+ };
+
+ return (dispatch) => {
+   axios
+     .post('/projects.json', JSON.stringify(projectData))
+     .then((response) => {
+       if (response.data) {
+         dispatch(setProject(projectData));
+       } else {
+         dispatch(addProjectFailed(new Error('Cant add project')));
+       }
+     })
+     .catch((err) => dispatch(addProjectFailed(err)));
+ };
 };
 
 export const initProjects = () => {
   return (dispatch) => {
-    axios.get('/projects.json').then((response) => {
-      if (response.data) {
-        let resData = null;
-        if (response.data.indexOf(',') === -1) {
-          resData = [{ name: response.data }];
-        } else {
-          resData = response.data.split(',').map((project) => {
-            return {
-              name: project,
-            };
-          });
+    axios
+      .get('/projects.json')
+      .then((response) => {
+        if (!response.data) {
+          dispatch(projectsEmpty());
         }
-        dispatch(setProjects(resData));
-      } else {
-        dispatch(fetchProjectsFailed());
-      }
-    });
+        if (response.data) {
+          const projectsList = Object.values(response.data);
+          dispatch(setProjects(projectsList));
+        } else {
+          dispatch(fetchProjectsFailed(new Error('Fetch projects Fail')));
+        }
+      })
+      .catch((err) => dispatch(fetchProjectsFailed(err)));;
   };
 };

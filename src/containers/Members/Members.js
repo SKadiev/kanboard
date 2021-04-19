@@ -17,42 +17,49 @@ import {
 
 const Members = (props) => {
   const [membersOutput, setMembersOutput] = useState(<Spinner />);
-    const [addModalShow, setAddModalShow] = React.useState(false);
+  const [addModalShow, setAddModalShow] = React.useState(false);
 
   const dispatch = useDispatch();
   const members = useSelector((state) => {
     return state.membersState.members;
   });
-  
+
+   const statusMessage = useSelector((state) => {
+     return state.membersState.statusMessage;
+   });
+   
   useEffect(() => {
     dispatch(initMembers());
   }, []);
 
   useEffect(() => {
-    if (members.length !== 0) {
-      setMembersOutput(
-        <React.Fragment>
-          <Button
-            variant="primary"
-            clicked={() => setAddModalShow(true)}
-            value="Add Member"
-          />
-          {ReactDOM.createPortal(
-            <Modal
-              title="Members"
-              show={addModalShow}
-              onHide={() => setAddModalShow(false)}
-            >
-              <MemberForm />
-            </Modal>,
-            document.getElementById('modal-content')
-          )}
-          {LayoutComponentGenerator(Member, members)()}
-        </React.Fragment>
-      );
-      dispatch(fetchMembersFinished());
-    }
-  }, [members, addModalShow]);
+    setMembersOutput(
+      <React.Fragment>
+        <Button
+          variant="primary"
+          clicked={() => setAddModalShow(true)}
+          value="Add Member"
+        />
+        {ReactDOM.createPortal(
+          <Modal
+            title="Members"
+            show={addModalShow}
+            onHide={() => setAddModalShow(false)}
+          >
+            <MemberForm />
+          </Modal>,
+          document.getElementById('modal-content')
+        )}
+
+        {members.length !== 0 ? (
+          LayoutComponentGenerator(Member, members)()
+        ) : (
+          <h1>{statusMessage}</h1>
+        )}
+      </React.Fragment>
+    );
+    dispatch(fetchMembersFinished());
+  }, [members, addModalShow, statusMessage]);
 
   // useEffect(() => {
   //   if (loaded) {

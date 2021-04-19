@@ -26,12 +26,16 @@ const Projects = (props) => {
     return state.projectsState.projects;
   });
 
+   const statusMessage = useSelector((state) => {
+     return state.projectsState.statusMessage;
+   });
+
   useEffect(() => {
     dispatch(initProjects());
   }, []);
 
   useEffect(() => {
-    if (projects.length !== 0) {
+   
       setProjectsOutput(
         <React.Fragment>
           <Button
@@ -49,12 +53,16 @@ const Projects = (props) => {
             </Modal>,
             document.getElementById('modal-content')
           )}
-          {LayoutComponentGenerator(Project, projects)()}
+          {projects.length !== 0 ? (
+            LayoutComponentGenerator(Project, projects)()
+          ) : (
+            <h1>{statusMessage}</h1>
+          )}
         </React.Fragment>
       );
       dispatch(fetchProjectsFinished());
-    }
-  }, [projects, addModalShow]);
+    
+  }, [projects, addModalShow, statusMessage]);
 
   // useEffect(() => {
   //   if (loaded) {

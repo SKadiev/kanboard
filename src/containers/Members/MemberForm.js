@@ -6,13 +6,10 @@ import { addNewMember } from '../../store/actions/';
 const MemberForm = (props) => {
   const [memberValue, setInputValue] = useState('');
   const dispatch = useDispatch();
-  const members = useSelector((state) => {
-    return state.membersState.members;
-  });
 
   const onSumbit = (event) => {
     event.preventDefault();
-    dispatch(addNewMember(members, memberValue));
+    dispatch(addNewMember(memberValue));
   };
 
   return (

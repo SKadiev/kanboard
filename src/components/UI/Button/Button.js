@@ -1,4 +1,6 @@
 import React from 'react';
+import styles from './Button.css';
+
 import { Button as ReactBotstrapButton } from 'react-bootstrap';
 
 const Button = (props) => {
@@ -12,4 +14,4 @@ const Button = (props) => {
   );
 };
 
-export default Button;
+export default  React.memo(Button);

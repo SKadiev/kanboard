@@ -3,7 +3,8 @@ export {
   fetchMembersFailed,
   initMembers,
   fetchMembersFinished,
-  addNewMember
+  addNewMember,
+  deleteMember,
 } from './members';
 
 export {
