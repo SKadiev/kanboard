@@ -19,11 +19,10 @@ const Member = (props) => {
         </Card.Text>
         <Button variant="primary" value="Go somewhere" />
         <Button
-          clicked={() => dispatch(deleteMember(props.id))}
+          clicked={() => dispatch(deleteMember(props.uniqueDbId))}
           value="Delete Member"
           variant="danger"
         />
-         
       </Card.Body>
     </Card>
   );

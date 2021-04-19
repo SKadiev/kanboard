@@ -61,8 +61,12 @@ export const addNewProject = (project) => {
    axios
      .post('/projects.json', JSON.stringify(projectData))
      .then((response) => {
+       
        if (response.data) {
-         dispatch(setProject(projectData));
+         
+          dispatch(
+            setProject({ ...projectData, uniqueDbIq: response.data.name })
+          );
        } else {
          dispatch(addProjectFailed(new Error('Cant add project')));
        }

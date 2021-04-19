@@ -65,9 +65,10 @@ export const addNewMember = (member) => {
     axios
       .post('/members.json', JSON.stringify(memberData))
       .then((response) => {
-
+        
         if (response.data) {
-          dispatch(setMember(memberData));
+          console.log({ ...memberData, uniqueDbId: response.data.name });
+          dispatch(setMember({...memberData, uniqueDbId: response.data.name}));
         } else {
           dispatch(addMemberFailed( new Error('Cant add member')));
         }
@@ -78,28 +79,30 @@ export const addNewMember = (member) => {
 
 
 export const memberDeleted = (memberId) => {
+  console.log('memberDeleted');
   return {
     type: actions.MEMBER_DELETED,
+    memberId
   };
 };
 
 
 
-export const deleteMember = ( memberId) => {
-    console.log(memberId)
+export const deleteMember = (uniqueDbId) => {
 
   return (dispatch) => {
+
     axios
-      .delete(
-        '/members/' + memberId + '.json'
-      )
+      .delete('/members/' + uniqueDbId  + '.json' )
       .then((response) => {
-        if (response.data) {
-          dispatch(memberDeleted(memberId));
+        console.log(response)
+        if (response.status = 200) {
+          dispatch(memberDeleted(uniqueDbId));
         } else {
-          dispatch(deleteMemberFailed(memberId));
+          dispatch(deleteMemberFailed(uniqueDbId));
         }
-      }).catch(e => console.log(e));
+      })
+      .catch((e) => console.log(e));
   };
 };
 
@@ -113,8 +116,14 @@ export const initMembers = () => {
            dispatch(membersEmpty());
          }
         if (response.data) {
-          const membersList = (Object.values(response.data));
-          dispatch(setMembers(membersList));
+          const membersListValues = (Object.values(response.data));
+          const membersListUniqueIds = Object.keys(response.data);
+          const newListOfMembers = membersListValues
+            .map((member, index) => {
+
+              return { ...member, uniqueDbId: membersListUniqueIds[index] };
+            })
+          dispatch(setMembers(newListOfMembers));
         } else {
           dispatch(fetchMembersFailed(new Error("Fetch members Fail")));
         }

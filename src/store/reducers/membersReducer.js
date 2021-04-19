@@ -18,6 +18,8 @@ const fetchMembersFailed = (state, action) => {
 };
 
 const setMember = (state, action) => {
+
+  console.log([...state.members, action.member]);
   return updateObject(state, {
     members: [...state.members, action.member],
   });
@@ -33,12 +35,23 @@ const membersEmpty = (state, action) => {
 
 const memberDeleted = (state, action) => {
 
+  let memberIndexForDelete = null;
   const membersList = [... state.members];
 
-  const afterDeleteMembersList = membersList.splice(action.memberId,1, membersList);
- 
+  for (let index = 0; index < membersList.length; index++) {
+    const element = membersList[index];
+    if (element.uniqueDbId === action.memberId) {
+      memberIndexForDelete = element.uniqueDbId;
+      break;
+    }
+  }
+  
 
-  return updateObject(state, { menubars: afterDeleteMembersList });
+   membersList.splice(memberIndexForDelete, 1);
+ 
+   const listAfterRemove = [...membersList];
+
+  return updateObject(state, { members: listAfterRemove });
 };
 
 

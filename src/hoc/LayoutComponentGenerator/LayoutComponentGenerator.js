@@ -17,7 +17,7 @@ const LayoutComponentGenerator = (Component, componentPayload) => {
       if (components.length === 1) {
         rowsOrderedList.push(
           generateRow(
-            <Col md={{ span: 6 }}>
+            <Col key={component.name + index} md={{ span: 6 }}>
               <div className={styles.Projects}>
                 <Component {...component} />
               </div>
@@ -33,7 +33,7 @@ const LayoutComponentGenerator = (Component, componentPayload) => {
       ) {
         rowsOrderedList.push(
           generateRow(
-            <Col md={{ span: 6 }}>
+            <Col key={component.name + index} md={{ span: 6 }}>
               <div className={styles.Projects}>
                 <Component {...component} />
               </div>
@@ -59,6 +59,7 @@ const LayoutComponentGenerator = (Component, componentPayload) => {
         );
       }
     });
+    console.log(rowsOrderedList)
     return rowsOrderedList;
   };
 
