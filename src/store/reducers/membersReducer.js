@@ -41,7 +41,7 @@ const memberDeleted = (state, action) => {
   for (let index = 0; index < membersList.length; index++) {
     const element = membersList[index];
     if (element.uniqueDbId === action.memberId) {
-      memberIndexForDelete = element.uniqueDbId;
+      memberIndexForDelete = index;
       break;
     }
   }

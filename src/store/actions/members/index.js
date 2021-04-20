@@ -80,6 +80,8 @@ export const addNewMember = (member) => {
 
 export const memberDeleted = (memberId) => {
   console.log('memberDeleted');
+    console.log(memberId);
+
   return {
     type: actions.MEMBER_DELETED,
     memberId
