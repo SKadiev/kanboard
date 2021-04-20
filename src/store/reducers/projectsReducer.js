@@ -1,5 +1,6 @@
 import { fetchProjectsFinished } from '../actions';
 import * as actions from '../actions/actionTypes';
+import Spinner from '../../components/UI/Spinner/Spinner';
 import { updateObject } from '../utility';
 
 const initialState = {
@@ -27,6 +28,9 @@ const fetchProjectFinished = (state, action) => {
   return updateObject(state, { loaded: true });
 };
 
+const fetchProjectsStart = (state, action) => {
+  return updateObject(state, { loaded: false, statusMessage: <Spinner /> });
+};
 const projectsEmpty = (state, action) => {
   return updateObject(state, { statusMessage: action.message });
 };
@@ -59,6 +63,8 @@ const reducer = (state = initialState, action) => {
       return fetchProjectsFailed(state, action);
     case actions.SET_PROJECT:
       return setProject(state, action);
+    case actions.FETCH_PROJECTS_START:
+      return fetchProjectsStart(state, action);
     case actions.FETCH_PROJECTS_FINISHED:
       return fetchProjectFinished(state, action);
     case actions.PROJECTS_EMPTY:

@@ -50,6 +50,7 @@ const Members = (props) => {
           </Modal>,
           document.getElementById('modal-content')
         )}
+        
 
         {members.length !== 0 ? (
           LayoutComponentGenerator(Member, members)()
@@ -58,7 +59,7 @@ const Members = (props) => {
         )}
       </React.Fragment>
     );
-    dispatch(fetchMembersFinished());
+    // dispatch(fetchMembersFinished());
   }, [members, addModalShow, statusMessage]);
 
   // useEffect(() => {
@@ -78,7 +79,6 @@ const Members = (props) => {
   //   }
   // }, [loaded]);
 
-  console.log(membersOutput)
   return membersOutput;
 };
 

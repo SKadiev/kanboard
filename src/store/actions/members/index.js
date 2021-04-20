@@ -23,6 +23,12 @@ export const fetchMembersFinished = () => {
   };
 };
 
+export const fetchMembersStart = () => {
+  return {
+    type: actions.FETCH_MEMBERS_START,
+  };
+};
+
 export const setMember = (member) => {
   return {
     type: actions.SET_MEMBER,
@@ -80,7 +86,6 @@ export const addNewMember = (member) => {
 
 export const memberDeleted = (memberId) => {
   console.log('memberDeleted');
-
   return {
     type: actions.MEMBER_DELETED,
     memberId
@@ -96,6 +101,7 @@ export const deleteMember = (uniqueDbId) => {
     axios
       .delete('/members/' + uniqueDbId  + '.json' )
       .then((response) => {
+        console.log(response)
         if (response.status = 200) {
           dispatch(memberDeleted(uniqueDbId));
         } else {
@@ -108,26 +114,29 @@ export const deleteMember = (uniqueDbId) => {
 
 
 export const initMembers = () => {
+  
   return (dispatch) => {
-    axios
-      .get('/members.json')
-      .then((response) => {
-         if (!response.data) {
-           dispatch(membersEmpty());
-         }
-        if (response.data) {
-          const membersListValues = (Object.values(response.data));
-          const membersListUniqueIds = Object.keys(response.data);
-          const newListOfMembers = membersListValues
-            .map((member, index) => {
+      dispatch(fetchMembersStart());
+      axios
+        .get('/members.json')
+        .then((response) => {
+           if (!response.data) {
+             dispatch(membersEmpty());
+           }
+          if (response.data) {
+            const membersListValues = (Object.values(response.data));
+            const membersListUniqueIds = Object.keys(response.data);
+            const newListOfMembers = membersListValues
+              .map((member, index) => {
+  
+                return { ...member, uniqueDbId: membersListUniqueIds[index] };
+              })
+            dispatch(setMembers(newListOfMembers));
+          } else {
+            dispatch(fetchMembersFailed(new Error("Fetch members Fail")));
+          }
+        })
+        .catch((err) => dispatch(fetchMembersFailed(err)));
 
-              return { ...member, uniqueDbId: membersListUniqueIds[index] };
-            })
-          dispatch(setMembers(newListOfMembers));
-        } else {
-          dispatch(fetchMembersFailed(new Error("Fetch members Fail")));
-        }
-      })
-      .catch((err) => dispatch(fetchMembersFailed(err)));
   };
 };

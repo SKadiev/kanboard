@@ -108,10 +108,17 @@ export const deleteProject = (uniqueDbId) => {
   };
 };
 
+export const fetcProjectsStart = () => {
+  return {
+    type: actions.FETCH_PROJECTS_START,
+  };
+};
+
 
 
 export const initProjects = () => {
   return (dispatch) => {
+    dispatch(fetcProjectsStart());
     axios
       .get('/projects.json')
       .then((response) => {

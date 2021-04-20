@@ -1,6 +1,7 @@
 import { act } from 'react-dom/test-utils';
 import * as actions from '../actions/actionTypes';
 import { updateObject } from '../utility';
+import Spinner from '../../components/UI/Spinner/Spinner'
 
 const initialState = {
   members: [],
@@ -26,7 +27,11 @@ const setMember = (state, action) => {
 };
 
 const fetchMembersFinished = (state, action) => {
-  return updateObject(state, { loaded: true });
+  return updateObject(state, { loaded: true,  statusMessage: ''  });
+};
+
+const fetchMembersStart = (state, action) => {
+  return updateObject(state, { loaded: false, statusMessage: <Spinner /> });
 };
 
 const membersEmpty = (state, action) => {
@@ -66,6 +71,8 @@ const reducer = (state = initialState, action) => {
       return setMember(state, action);
     case actions.FETCH_MEMBERS_FINISHED:
       return fetchMembersFinished(state, action);
+    case actions.FETCH_MEMBERS_START:
+      return fetchMembersStart(state, action);
     case actions.MEMBERS_EMPTY:
       return membersEmpty(state, action);
     case actions.MEMBER_DELETED:

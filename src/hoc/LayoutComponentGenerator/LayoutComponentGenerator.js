@@ -59,7 +59,6 @@ const LayoutComponentGenerator = (Component, componentPayload) => {
         );
       }
     });
-    console.log(rowsOrderedList)
     return rowsOrderedList;
   };
 
