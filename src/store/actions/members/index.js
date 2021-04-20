@@ -64,14 +64,14 @@ export const addNewMember = (member) => {
 
   const memberData = {
     id: member  + '_' + new Date().getTime(),   
-    name: member
+    name: member.name,
+    role: member.role
   }
 
   return (dispatch) => {
     axios
       .post('/members.json', JSON.stringify(memberData))
       .then((response) => {
-        
         if (response.data) {
           console.log({ ...memberData, uniqueDbId: response.data.name });
           dispatch(setMember({...memberData, uniqueDbId: response.data.name}));

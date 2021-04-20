@@ -4,16 +4,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addNewProject } from '../../store/actions/';
 
 const ProjectForm = (props) => {
-  const [projectValue, setInputValue] = useState('');
-  const dispatch = useDispatch();
-  const projects = useSelector( state => {
-    return state.projectsState.projects;
-  })
+  const [projectNameValue, setProjectNameValue] = useState('');
 
+  const dispatch = useDispatch();
 
   const onSumbit = (event) => {
     event.preventDefault();
-    dispatch(addNewProject( projectValue));
+    dispatch(addNewProject( projectNameValue));
   };
 
   return (
@@ -21,9 +18,9 @@ const ProjectForm = (props) => {
       <Form.Group controlId="formBasicEmail">
         <Form.Label>Add Project</Form.Label>
         <Form.Control
-          value={projectValue}
+          value={projectNameValue}
           onChange={(e) => {
-            setInputValue(e.target.value);
+            setProjectNameValue(e.target.value);
           }}
           type="text"
           placeholder="Project name"

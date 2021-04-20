@@ -18,9 +18,7 @@ const LayoutComponentGenerator = (Component, componentPayload) => {
         rowsOrderedList.push(
           generateRow(
             <Col key={component.name + index} md={{ span: 6 }}>
-              <div className={styles.Projects}>
                 <Component {...component} />
-              </div>
             </Col>,
             component.name + index
           )
@@ -34,9 +32,7 @@ const LayoutComponentGenerator = (Component, componentPayload) => {
         rowsOrderedList.push(
           generateRow(
             <Col key={component.name + index} md={{ span: 6 }}>
-              <div className={styles.Projects}>
                 <Component {...component} />
-              </div>
             </Col>,
             component.name + index
           )
@@ -45,14 +41,11 @@ const LayoutComponentGenerator = (Component, componentPayload) => {
         rowsOrderedList[index - 1] = generateRow(
           [
             <Col key={component.name + (index - 1)}>
-              <div className={styles.Projects}>
                 <Component {...components[index - 1]} />
-              </div>
+              
             </Col>,
             <Col key={component.name + index}>
-              <div className={styles.Projects}>
                 <Component {...component} />
-              </div>
             </Col>
           ],
           component.name + index

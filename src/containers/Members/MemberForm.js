@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { addNewMember } from '../../store/actions/';
+import { addNewMember, setMembers } from '../../store/actions/';
 
 const MemberForm = (props) => {
-  const [memberValue, setInputValue] = useState('');
+  const [memberNameValue, setInputValue] = useState('');
+  const [memberRoleValue, setMemberRoleValue] = useState('regular');
+
   const dispatch = useDispatch();
 
   const onSumbit = (event) => {
     event.preventDefault();
-    dispatch(addNewMember(memberValue));
+    const memberData = {
+      name : memberNameValue,
+      role: memberRoleValue
+    };
+
+    dispatch(addNewMember(memberData));
   };
 
   return (
@@ -17,13 +24,26 @@ const MemberForm = (props) => {
       <Form.Group controlId="formBasicEmail">
         <Form.Label>Add Member</Form.Label>
         <Form.Control
-          value={memberValue}
+          value={memberNameValue}
           onChange={(e) => {
             setInputValue(e.target.value);
           }}
           type="text"
           placeholder="Member name"
         />
+        <Form.Group controlId="exampleForm.SelectCustom">
+          <Form.Label>Member Role</Form.Label>
+          <Form.Control
+            onChange={(e) => {
+              setMemberRoleValue(e.target.value);
+            }}
+            as="select"
+            custom
+          >
+            <option value="admin">Admin</option>
+            <option value="regular" >Regular</option>
+          </Form.Control>
+        </Form.Group>
       </Form.Group>
       <Button onClick={onSumbit} variant="primary" type="submit">
         Submit
