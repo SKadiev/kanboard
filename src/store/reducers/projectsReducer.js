@@ -31,6 +31,25 @@ const projectsEmpty = (state, action) => {
   return updateObject(state, { statusMessage: action.message });
 };
 
+const projectDeleted = (state, action) => {
+  let projectIndexForDelete = null;
+  const projectsList = [...state.projects];
+
+  for (let index = 0; index < projectsList.length; index++) {
+    const element = projectsList[index];
+    if (element.uniqueDbId === action.projectId) {
+      projectIndexForDelete = index;
+      break;
+    }
+  }
+
+  projectsList.splice(projectIndexForDelete, 1);
+
+  const listAfterRemove = [...projectsList];
+
+  return updateObject(state, { projects: listAfterRemove });
+};
+
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -44,6 +63,8 @@ const reducer = (state = initialState, action) => {
       return fetchProjectFinished(state, action);
     case actions.PROJECTS_EMPTY:
       return projectsEmpty(state, action);
+    case actions.PROJECT_DELETED:
+      return projectDeleted (state, action);
     default:
       return state;
   }

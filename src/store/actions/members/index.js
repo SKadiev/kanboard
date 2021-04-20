@@ -80,7 +80,6 @@ export const addNewMember = (member) => {
 
 export const memberDeleted = (memberId) => {
   console.log('memberDeleted');
-    console.log(memberId);
 
   return {
     type: actions.MEMBER_DELETED,
@@ -97,7 +96,6 @@ export const deleteMember = (uniqueDbId) => {
     axios
       .delete('/members/' + uniqueDbId  + '.json' )
       .then((response) => {
-        console.log(response)
         if (response.status = 200) {
           dispatch(memberDeleted(uniqueDbId));
         } else {

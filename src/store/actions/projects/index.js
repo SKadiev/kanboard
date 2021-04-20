@@ -50,30 +50,65 @@ export const setProject = (project) => {
   };
 };
 
-export const addNewProject = (project) => {
- 
- const projectData = {
-   id: project + '_' + new Date().getTime(),
-   name: project,
- };
 
- return (dispatch) => {
-   axios
-     .post('/projects.json', JSON.stringify(projectData))
-     .then((response) => {
-       
-       if (response.data) {
-         
+
+export const addNewProject = (project) => {
+  const projectData = {
+    id: project + '_' + new Date().getTime(),
+    name: project,
+  };
+
+  return (dispatch) => {
+    axios
+      .post('/projects.json', JSON.stringify(projectData))
+      .then((response) => {
+        if (response.data) {
           dispatch(
-            setProject({ ...projectData, uniqueDbIq: response.data.name })
+            setProject({ ...projectData, uniqueDbId: response.data.name })
           );
-       } else {
-         dispatch(addProjectFailed(new Error('Cant add project')));
-       }
-     })
-     .catch((err) => dispatch(addProjectFailed(err)));
- };
+        } else {
+          dispatch(addProjectFailed(new Error('Cant add project')));
+        }
+      })
+      .catch((err) => dispatch(addProjectFailed(err)));
+  };
 };
+
+
+export const projectDeleted = (projectId) => {
+
+  return {
+    type: actions.PROJECT_DELETED,
+    projectId,
+  };
+};
+
+
+export const deleteProjectFailed = (projectId) => {
+  return {
+    type: actions.DELETE_PROJECT_FAILED,
+    projectId,
+  };
+};
+
+
+
+export const deleteProject = (uniqueDbId) => {
+  return (dispatch) => {
+    axios
+      .delete('/projects/' + uniqueDbId + '.json')
+      .then((response) => {
+        if ((response.status = 200)) {
+          dispatch(projectDeleted(uniqueDbId));
+        } else {
+          dispatch(deleteProjectFailed(uniqueDbId));
+        }
+      })
+      .catch((e) => console.log(e));
+  };
+};
+
+
 
 export const initProjects = () => {
   return (dispatch) => {
@@ -84,12 +119,16 @@ export const initProjects = () => {
           dispatch(projectsEmpty());
         }
         if (response.data) {
-          const projectsList = Object.values(response.data);
-          dispatch(setProjects(projectsList));
+          const projectListValues = Object.values(response.data);
+          const projectsListUniqueIds = Object.keys(response.data);
+          const newListOfProjects = projectListValues.map((project, index) => {
+            return { ...project, uniqueDbId: projectsListUniqueIds[index] };
+          });
+          dispatch(setProjects(newListOfProjects));
         } else {
-          dispatch(fetchProjectsFailed(new Error('Fetch projects Fail')));
+          dispatch(fetchProjectsFailed(new Error('Fetch members Fail')));
         }
       })
-      .catch((err) => dispatch(fetchProjectsFailed(err)));;
+      .catch((err) => dispatch(fetchProjectsFailed(err)));
   };
 };

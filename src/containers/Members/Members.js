@@ -78,6 +78,7 @@ const Members = (props) => {
   //   }
   // }, [loaded]);
 
+  console.log(membersOutput)
   return membersOutput;
 };
 

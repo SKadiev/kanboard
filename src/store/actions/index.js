@@ -13,4 +13,5 @@ export {
   initProjects,
   addNewProject,
   fetchProjectsFinished,
+  deleteProject
 } from './projects';
