@@ -63,7 +63,7 @@ export const membersEmpty = () => {
 export const addNewMember = (member) => {
 
   const memberData = {
-    id: member  + '_' + new Date().getTime(),   
+    id: member.name  + '_' + new Date().getTime(),   
     name: member.name,
     role: member.role
   }
