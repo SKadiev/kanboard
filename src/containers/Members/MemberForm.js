@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { addNewMember, setMembers } from '../../store/actions/';
+import logo from '../../assets/logo192.png';
 
 const MemberForm = (props) => {
   const [memberNameValue, setInputValue] = useState('');
   const [memberRoleValue, setMemberRoleValue] = useState('regular');
 
   const dispatch = useDispatch();
-
   const onSumbit = (event) => {
     event.preventDefault();
     const memberData = {
-      name : memberNameValue,
-      role: memberRoleValue
+      name: memberNameValue,
+      role: memberRoleValue,
+      img: logo
     };
 
     dispatch(addNewMember(memberData));

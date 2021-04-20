@@ -65,7 +65,8 @@ export const addNewMember = (member) => {
   const memberData = {
     id: member.name  + '_' + new Date().getTime(),   
     name: member.name,
-    role: member.role
+    role: member.role,
+    img: member.img
   }
 
   return (dispatch) => {
@@ -73,7 +74,6 @@ export const addNewMember = (member) => {
       .post('/members.json', JSON.stringify(memberData))
       .then((response) => {
         if (response.data) {
-          console.log({ ...memberData, uniqueDbId: response.data.name });
           dispatch(setMember({...memberData, uniqueDbId: response.data.name}));
         } else {
           dispatch(addMemberFailed( new Error('Cant add member')));
