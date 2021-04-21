@@ -42,8 +42,11 @@ const MemberForm = (props) => {
             custom
           >
             <option value="admin">Admin</option>
-            <option value="regular" >Regular</option>
+            <option value="regular">Regular</option>
           </Form.Control>
+          <Form.Group>
+            <Form.File id="custom-file" label="Custom file input" custom />
+          </Form.Group>
         </Form.Group>
       </Form.Group>
       <Button onClick={onSumbit} variant="primary" type="submit">

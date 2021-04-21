@@ -38,7 +38,7 @@ const Project = (props) => {
           <Card.Title>{props.name}</Card.Title>
             <strong>Members</strong>
             {membersList}
-          <Button variant="primary" value="Open Project info" />
+          <Button variant="primary" value="Add member" />
           <Button
             clicked={() => dispatch(deleteProject(props.uniqueDbId))}
             value="Delete Project"

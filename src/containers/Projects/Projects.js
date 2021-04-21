@@ -8,18 +8,14 @@ import ProjectForm from './ProjectForm';
 import { useState, useEffect } from 'react';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
+import useLayoutComponentGenerator from '../../hooks/use-layoutContainerGenerator';
 
 import {
-  setProjects,
   initProjects,
-  fetchProjectsFailed,
-  addProject,
-  fetchProjectsFinished,
 } from '../../store/actions/';
 
 const Projects = (props) => {
-  const [projectsOutput, setProjectsOutput] = useState(<Spinner />);
-  const [addModalShow, setAddModalShow] = React.useState(false);
+ 
   const dispatch = useDispatch();
 
   const projects = useSelector((state) => {
@@ -34,56 +30,14 @@ const Projects = (props) => {
     dispatch(initProjects());
   }, []);
 
-  useEffect(() => {
-   
-      setProjectsOutput(
-        <React.Fragment>
-          <Button
-            variant="primary"
-            clicked={() => setAddModalShow(true)}
-            value="Add Project"
-          />
-          {ReactDOM.createPortal(
-            <Modal
-              title="Add Project"
-              show={addModalShow}
-              onHide={() => setAddModalShow(false)}
-            >
-              <ProjectForm />
-            </Modal>,
-            document.getElementById('modal-content')
-          )}
-          {projects.length !== 0 ? (
-            LayoutComponentGenerator(Project, projects)()
-          ) : (
-            <h1>{statusMessage}</h1>
-          )}
-        </React.Fragment>
-      );
-      dispatch(fetchProjectsFinished());
-    
-  }, [projects, addModalShow, statusMessage]);
+ 
+    let projectsOutput = useLayoutComponentGenerator(
+      Project,
+      ProjectForm,
+      projects,
+      statusMessage
+    );
 
-  // useEffect(() => {
-  //   if (loaded) {
-  //     welcomeMessage = (
-  //       <h1>
-  //         <strong>WELCOME TO Project</strong>
-  //       </h1>
-  //     );
-  //     setTimeout(() => {
-  //       setProjectsOutput((prevState)=> {[welcomeMessage,prevState]}
-  //         [welcomeMessage, projectsOutput].map((el, index) => {
-  //           return React.cloneElement(el, { key: index });
-  //         })
-  //       );
-  //     }, 1000);
-  //   }
-
-  //   return () => {
-  //     setProjectsOutput(projectsOutput);
-  //   };
-  // }, [loaded]);
 
   return projectsOutput;
 };
