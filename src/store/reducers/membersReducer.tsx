@@ -1,4 +1,4 @@
-import * as actions from '../actions/actionTypes';
+import {MemberActions}  from '../actions/actionTypes';
 import { updateObject } from '../utility';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
@@ -58,19 +58,19 @@ const memberDeleted = (state, action) => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actions.SET_MEMBERS:
+    case MemberActions.SET_MEMBERS:
       return setMembers(state, action);
-    case actions.FETCH_MEMBERS_FAILED:
+    case MemberActions.FETCH_MEMBERS_FAILED:
       return fetchMembersFailed(state, action);
-    case actions.SET_MEMBER:
+    case MemberActions.SET_MEMBER:
       return setMember(state, action);
-    case actions.FETCH_MEMBERS_FINISHED:
+    case MemberActions.FETCH_MEMBERS_FINISHED:
       return fetchMembersFinished(state, action);
-    case actions.FETCH_MEMBERS_START:
+    case MemberActions.FETCH_MEMBERS_START:
       return fetchMembersStart(state, action);
-    case actions.MEMBERS_EMPTY:
+    case MemberActions.MEMBERS_EMPTY:
       return membersEmpty(state, action);
-    case actions.MEMBER_DELETED:
+    case MemberActions.MEMBER_DELETED:
       return memberDeleted(state, action);
     default:
       return state;

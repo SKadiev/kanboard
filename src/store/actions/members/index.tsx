@@ -1,17 +1,17 @@
-import * as actions from '../actionTypes';
+import {MemberActions} from '../actionTypes';
 import axios from '../../../axios';
 import { fetchProjectsFailed } from '../projects';
 
 export const setMembers = (members:any) => {
   return {
-    type: actions.SET_MEMBERS,
+    type: MemberActions.SET_MEMBERS,
     members,
   };
 };
 
 export const fetchMembersFailed = (err) => {
   return {
-    type: actions.FETCH_MEMBERS_FAILED,
+    type: MemberActions.FETCH_MEMBERS_FAILED,
     err,
     result: <p>Error loading members</p>,
   };
@@ -19,40 +19,40 @@ export const fetchMembersFailed = (err) => {
 
 export const fetchMembersFinished = () => {
   return {
-    type: actions.FETCH_MEMBERS_FINISHED,
+    type: MemberActions.FETCH_MEMBERS_FINISHED,
   };
 };
 
 export const fetchMembersStart = () => {
   return {
-    type: actions.FETCH_MEMBERS_START,
+    type: MemberActions.FETCH_MEMBERS_START,
   };
 };
 
 export const setMember = (member: any) => {
   return {
-    type: actions.SET_MEMBER,
+    type: MemberActions.SET_MEMBER,
     member,
   };
 };
 
 export const addMemberFailed = (err) => {
   return {
-    type: actions.ADD_MEMBER_FAILED,
+    type: MemberActions.ADD_MEMBER_FAILED,
     err,
   };
 };
 
 export const deleteMemberFailed = (memberId: number) => {
   return {
-    type: actions.DELETE_MEMBER_FAILED,
+    type: MemberActions.DELETE_MEMBER_FAILED,
     memberId,
   };
 };
 
 export const membersEmpty = () => {
   return {
-    type: actions.MEMBERS_EMPTY,
+    type: MemberActions.MEMBERS_EMPTY,
     message: 'No Members',
   };
 };
@@ -84,7 +84,7 @@ export const addNewMember = (member) => {
 export const memberDeleted = (memberId: number) => {
   console.log('memberDeleted');
   return {
-    type: actions.MEMBER_DELETED,
+    type: MemberActions.MEMBER_DELETED,
     memberId,
   };
 };
