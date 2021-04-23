@@ -11,6 +11,12 @@ import membersReducer from './store/reducers/membersReducer';
 import projectsReducer from './store/reducers/projectsReducer';
 import thunk from 'redux-thunk';
 
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({

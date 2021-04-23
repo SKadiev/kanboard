@@ -22,8 +22,13 @@ const Members = (props) => {
   useEffect(() => {
     dispatch(initMembers());
   }, []);
-  
-  let membersOutput = useLayoutComponentGenerator(Member,MemberForm,members,statusMessage);
+
+ let membersOutput = useLayoutComponentGenerator(
+   Member,
+   MemberForm,
+   members,
+   statusMessage
+ );
 
   return membersOutput;
 };

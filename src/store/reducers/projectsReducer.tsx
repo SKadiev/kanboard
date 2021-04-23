@@ -1,46 +1,51 @@
-import { fetchProjectsFinished } from '../actions';
 import * as actions from '../actions/actionTypes';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { updateObject } from '../utility';
 
-const initialState = {
+const initialState : {
+  loaded:boolean,
+  statusMessage:any,
+  projects: [],
+  err:any
+} = {
   projects: [],
   loaded: false,
   err: null,
   statusMessage: null,
 };
 
-const setProjects = (state, action) => {
+
+const setProjects = (state: typeof initialState, action) => {
   return updateObject(state, { projects: action.projects });
 };
 
-const setProject = (state, action) => {
+const setProject = (state: typeof initialState, action) => {
   return updateObject(state, {
     projects: [...state.projects, action.project],
   });
 };
 
-const fetchProjectsFailed = (state, action) => {
-  return updateObject(state, { err:action.err });
+const fetchProjectsFailed = (state: typeof initialState, action) => {
+  return updateObject(state, { err: action.err });
 };
 
-const fetchProjectFinished = (state, action) => {
+const fetchProjectFinished = (state: typeof initialState, action) => {
   return updateObject(state, { loaded: true });
 };
 
-const fetchProjectsStart = (state, action) => {
+const fetchProjectsStart = (state: typeof initialState, action) => {
   return updateObject(state, { loaded: false, statusMessage: <Spinner /> });
 };
-const projectsEmpty = (state, action) => {
+const projectsEmpty = (state: typeof initialState, action) => {
   return updateObject(state, { statusMessage: action.message });
 };
 
-const projectDeleted = (state, action) => {
-  let projectIndexForDelete = null;
+const projectDeleted = (state: typeof initialState, action) => {
+  let projectIndexForDelete:number = -1;
   const projectsList = [...state.projects];
 
   for (let index = 0; index < projectsList.length; index++) {
-    const element = projectsList[index];
+    const element:any = projectsList[index];
     if (element.uniqueDbId === action.projectId) {
       projectIndexForDelete = index;
       break;
@@ -53,7 +58,6 @@ const projectDeleted = (state, action) => {
 
   return updateObject(state, { projects: listAfterRemove });
 };
-
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -70,7 +74,7 @@ const reducer = (state = initialState, action) => {
     case actions.PROJECTS_EMPTY:
       return projectsEmpty(state, action);
     case actions.PROJECT_DELETED:
-      return projectDeleted (state, action);
+      return projectDeleted(state, action);
     default:
       return state;
   }

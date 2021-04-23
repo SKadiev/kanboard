@@ -38,7 +38,7 @@ const useLayoutComponentGenerator = (Component, ComponentForm, components, statu
         )}
       </React.Fragment>
     );
-  }, [components, modalShow, statusMessage]);
+  }, [Component, components, modalShow, statusMessage]);
 
   
   return componentOutput;

@@ -4,18 +4,17 @@ import axios from '../../../axios';
 export const setProjects = (projects) => {
   return {
     type: actions.SET_PROJECTS,
-    projects
+    projects,
   };
 };
 
-export const fetchProjectsFailed = (err) => {
+export const fetchProjectsFailed = (err: any) => {
   return {
     type: actions.FETCH_PROJECTS_FAILED,
     result: <p>Error loading projects</p>,
-    err
+    err,
   };
 };
-
 
 export const projectsEmpty = () => {
   return {
@@ -24,10 +23,10 @@ export const projectsEmpty = () => {
   };
 };
 
-export const addProjectFailed = (err) => {
+export const addProjectFailed = (err: any) => {
   return {
     type: actions.ADD_PROJECT_FAILED,
-    err
+    err,
   };
 };
 
@@ -49,8 +48,6 @@ export const setProject = (project) => {
     project,
   };
 };
-
-
 
 export const addNewProject = (project) => {
   const projectData = {
@@ -74,26 +71,21 @@ export const addNewProject = (project) => {
   };
 };
 
-
-export const projectDeleted = (projectId) => {
-
+export const projectDeleted = (projectId: number) => {
   return {
     type: actions.PROJECT_DELETED,
     projectId,
   };
 };
 
-
-export const deleteProjectFailed = (projectId) => {
+export const deleteProjectFailed = (projectId: number) => {
   return {
     type: actions.DELETE_PROJECT_FAILED,
     projectId,
   };
 };
 
-
-
-export const deleteProject = (uniqueDbId) => {
+export const deleteProject = (uniqueDbId: number) => {
   return (dispatch) => {
     axios
       .delete('/projects/' + uniqueDbId + '.json')
@@ -114,8 +106,6 @@ export const fetcProjectsStart = () => {
   };
 };
 
-
-
 export const initProjects = () => {
   return (dispatch) => {
     dispatch(fetcProjectsStart());
@@ -128,7 +118,7 @@ export const initProjects = () => {
         if (response.data) {
           const projectListValues = Object.values(response.data);
           const projectsListUniqueIds = Object.keys(response.data);
-          const newListOfProjects = projectListValues.map((project, index) => {
+          const newListOfProjects = projectListValues.map((project:any, index) => {
             return { ...project, uniqueDbId: projectsListUniqueIds[index] };
           });
           dispatch(setProjects(newListOfProjects));

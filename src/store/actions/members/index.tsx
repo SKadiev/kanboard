@@ -2,7 +2,7 @@ import * as actions from '../actionTypes';
 import axios from '../../../axios';
 import { fetchProjectsFailed } from '../projects';
 
-export const setMembers = (members) => {
+export const setMembers = (members:any) => {
   return {
     type: actions.SET_MEMBERS,
     members,
@@ -29,80 +29,73 @@ export const fetchMembersStart = () => {
   };
 };
 
-export const setMember = (member) => {
+export const setMember = (member: any) => {
   return {
     type: actions.SET_MEMBER,
-    member
+    member,
   };
 };
 
 export const addMemberFailed = (err) => {
   return {
     type: actions.ADD_MEMBER_FAILED,
-    err
+    err,
   };
 };
 
-export const deleteMemberFailed = (memberId) => {
+export const deleteMemberFailed = (memberId: number) => {
   return {
     type: actions.DELETE_MEMBER_FAILED,
-    memberId
+    memberId,
   };
 };
 
 export const membersEmpty = () => {
   return {
     type: actions.MEMBERS_EMPTY,
-    message: "No Members"
+    message: 'No Members',
   };
 };
 
-
-
-
 export const addNewMember = (member) => {
-
   const memberData = {
-    id: member.name  + '_' + new Date().getTime(),   
+    id: member.name + '_' + new Date().getTime(),
     name: member.name,
     role: member.role,
-    img: member.img
-  }
+    img: member.img,
+  };
 
   return (dispatch) => {
     axios
       .post('/members.json', JSON.stringify(memberData))
       .then((response) => {
         if (response.data) {
-          dispatch(setMember({...memberData, uniqueDbId: response.data.name}));
+          dispatch(
+            setMember({ ...memberData, uniqueDbId: response.data.name })
+          );
         } else {
-          dispatch(addMemberFailed( new Error('Cant add member')));
+          dispatch(addMemberFailed(new Error('Cant add member')));
         }
       })
       .catch((err) => dispatch(addMemberFailed(err)));
   };
 };
 
-
-export const memberDeleted = (memberId) => {
+export const memberDeleted = (memberId: number) => {
   console.log('memberDeleted');
   return {
     type: actions.MEMBER_DELETED,
-    memberId
+    memberId,
   };
 };
 
-
-
-export const deleteMember = (uniqueDbId) => {
-
+export const deleteMember = (uniqueDbId: number) => {
   return (dispatch) => {
-
     axios
-      .delete('/members/' + uniqueDbId  + '.json' )
+      .delete('/members/' + uniqueDbId + '.json')
       .then((response) => {
-        console.log(response)
-        if (response.status = 200) {
+        console.log(response);
+        if ((response.status = 200)) {
           dispatch(memberDeleted(uniqueDbId));
         } else {
           dispatch(deleteMemberFailed(uniqueDbId));
@@ -112,31 +105,26 @@ export const deleteMember = (uniqueDbId) => {
   };
 };
 
-
 export const initMembers = () => {
-  
   return (dispatch) => {
-      dispatch(fetchMembersStart());
-      axios
-        .get('/members.json')
-        .then((response) => {
-           if (!response.data) {
-             dispatch(membersEmpty());
-           }
-          if (response.data) {
-            const membersListValues = (Object.values(response.data));
-            const membersListUniqueIds = Object.keys(response.data);
-            const newListOfMembers = membersListValues
-              .map((member, index) => {
-  
-                return { ...member, uniqueDbId: membersListUniqueIds[index] };
-              })
-            dispatch(setMembers(newListOfMembers));
-          } else {
-            dispatch(fetchMembersFailed(new Error("Fetch members Fail")));
-          }
-        })
-        .catch((err) => dispatch(fetchMembersFailed(err)));
-
+    dispatch(fetchMembersStart());
+    axios
+      .get('/members.json')
+      .then((response) => {
+        if (!response.data) {
+          dispatch(membersEmpty());
+        }
+        if (response.data) {
+          const membersListValues = Object.values(response.data);
+          const membersListUniqueIds = Object.keys(response.data);
+          const newListOfMembers = membersListValues.map((member: any, index) => {
+            return { ...member, uniqueDbId: membersListUniqueIds[index] };
+          });
+          dispatch(setMembers(newListOfMembers));
+        } else {
+          dispatch(fetchMembersFailed(new Error('Fetch members Fail')));
+        }
+      })
+      .catch((err) => dispatch(fetchMembersFailed(err)));
   };
 };

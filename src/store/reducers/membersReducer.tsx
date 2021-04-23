@@ -1,65 +1,61 @@
-import { act } from 'react-dom/test-utils';
 import * as actions from '../actions/actionTypes';
 import { updateObject } from '../utility';
-import Spinner from '../../components/UI/Spinner/Spinner'
+import Spinner from '../../components/UI/Spinner/Spinner';
 
-const initialState = {
+const initialState: {
+  loaded:boolean,
+  statusMessage:string,
+  members: []
+} = {
   members: [],
   loaded: false,
-  statusMessage: null
-
+  statusMessage: '',
 };
 
-const setMembers = (state, action) => {
+const setMembers = (state: object, action) => {
   return updateObject(state, { members: action.members });
 };
 
-const fetchMembersFailed = (state, action) => {
+const fetchMembersFailed = (state: object, action: any) => {
   return updateObject(state, { err: action.err });
 };
 
-const setMember = (state, action) => {
-
-  console.log([...state.members, action.member]);
+const setMember = (state: {members:[]},action) => {
   return updateObject(state, {
     members: [...state.members, action.member],
   });
 };
 
-const fetchMembersFinished = (state, action) => {
-  return updateObject(state, { loaded: true,  statusMessage: ''  });
+const fetchMembersFinished = (state: object, action) => {
+  return updateObject(state, { loaded: true, statusMessage: '' });
 };
 
-const fetchMembersStart = (state, action) => {
+const fetchMembersStart = (state: object, action) => {
   return updateObject(state, { loaded: false, statusMessage: <Spinner /> });
 };
 
-const membersEmpty = (state, action) => {
+const membersEmpty = (state: object, action: {message:string}) => {
   return updateObject(state, { statusMessage: action.message });
 };
 
-const memberDeleted = (state, action) => {
-
-  let memberIndexForDelete = null;
-  const membersList = [... state.members];
+const memberDeleted = (state: {members:[]}, action) => {
+  let memberIndexForDelete:number = 0;
+  const membersList = [...state.members];
 
   for (let index = 0; index < membersList.length; index++) {
-    const element = membersList[index];
+    const element:any = membersList[index];
     if (element.uniqueDbId === action.memberId) {
       memberIndexForDelete = index;
       break;
     }
   }
-  
 
-   membersList.splice(memberIndexForDelete, 1);
- 
-   const listAfterRemove = [...membersList];
+  membersList.splice(memberIndexForDelete, 1);
+
+  const listAfterRemove = [...membersList];
 
   return updateObject(state, { members: listAfterRemove });
 };
-
-
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
