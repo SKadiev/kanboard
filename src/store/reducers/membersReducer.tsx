@@ -2,43 +2,42 @@ import * as actions from '../actions/actionTypes';
 import { updateObject } from '../utility';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
-const initialState: {
-  loaded:boolean,
-  statusMessage:string,
-  members: []
-} = {
+
+
+const initialState = {
+
   members: [],
   loaded: false,
   statusMessage: '',
 };
 
-const setMembers = (state: object, action) => {
+const setMembers = (state, action) => {
   return updateObject(state, { members: action.members });
 };
 
-const fetchMembersFailed = (state: object, action: any) => {
+const fetchMembersFailed = (state, action) => {
   return updateObject(state, { err: action.err });
 };
 
-const setMember = (state: {members:[]},action) => {
+const setMember = (state,action) => {
   return updateObject(state, {
     members: [...state.members, action.member],
   });
 };
 
-const fetchMembersFinished = (state: object, action) => {
+const fetchMembersFinished = (state, action) => {
   return updateObject(state, { loaded: true, statusMessage: '' });
 };
 
-const fetchMembersStart = (state: object, action) => {
+const fetchMembersStart = (state, action) => {
   return updateObject(state, { loaded: false, statusMessage: <Spinner /> });
 };
 
-const membersEmpty = (state: object, action: {message:string}) => {
+const membersEmpty = (state, action: {message:string}) => {
   return updateObject(state, { statusMessage: action.message });
 };
 
-const memberDeleted = (state: {members:[]}, action) => {
+const memberDeleted = (state, action) => {
   let memberIndexForDelete:number = 0;
   const membersList = [...state.members];
 

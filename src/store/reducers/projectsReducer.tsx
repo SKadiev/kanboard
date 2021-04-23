@@ -2,12 +2,7 @@ import * as actions from '../actions/actionTypes';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { updateObject } from '../utility';
 
-const initialState : {
-  loaded:boolean,
-  statusMessage:any,
-  projects: [],
-  err:any
-} = {
+const initialState  = {
   projects: [],
   loaded: false,
   err: null,
@@ -15,32 +10,32 @@ const initialState : {
 };
 
 
-const setProjects = (state: typeof initialState, action) => {
+const setProjects = (state, action) => {
   return updateObject(state, { projects: action.projects });
 };
 
-const setProject = (state: typeof initialState, action) => {
+const setProject = (state, action) => {
   return updateObject(state, {
     projects: [...state.projects, action.project],
   });
 };
 
-const fetchProjectsFailed = (state: typeof initialState, action) => {
+const fetchProjectsFailed = (state, action) => {
   return updateObject(state, { err: action.err });
 };
 
-const fetchProjectFinished = (state: typeof initialState, action) => {
+const fetchProjectFinished = (state, action) => {
   return updateObject(state, { loaded: true });
 };
 
-const fetchProjectsStart = (state: typeof initialState, action) => {
+const fetchProjectsStart = (state, action) => {
   return updateObject(state, { loaded: false, statusMessage: <Spinner /> });
 };
-const projectsEmpty = (state: typeof initialState, action) => {
+const projectsEmpty = (state, action) => {
   return updateObject(state, { statusMessage: action.message });
 };
 
-const projectDeleted = (state: typeof initialState, action) => {
+const projectDeleted = (state, action) => {
   let projectIndexForDelete:number = -1;
   const projectsList = [...state.projects];
 
