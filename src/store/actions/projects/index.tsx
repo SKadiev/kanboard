@@ -1,16 +1,16 @@
-import * as actions from '../actionTypes';
+import {ProjectActions} from '../actionTypes';
 import axios from '../../../axios';
 
 export const setProjects = (projects) => {
   return {
-    type: actions.SET_PROJECTS,
+    type: ProjectActions.SET_PROJECTS,
     projects,
   };
 };
 
 export const fetchProjectsFailed = (err: any) => {
   return {
-    type: actions.FETCH_PROJECTS_FAILED,
+    type: ProjectActions.FETCH_PROJECTS_FAILED,
     result: <p>Error loading projects</p>,
     err,
   };
@@ -18,33 +18,33 @@ export const fetchProjectsFailed = (err: any) => {
 
 export const projectsEmpty = () => {
   return {
-    type: actions.PROJECTS_EMPTY,
+    type: ProjectActions.PROJECTS_EMPTY,
     message: 'No Projects',
   };
 };
 
 export const addProjectFailed = (err: any) => {
   return {
-    type: actions.ADD_PROJECT_FAILED,
+    type: ProjectActions.ADD_PROJECT_FAILED,
     err,
   };
 };
 
 export const addProjectSuccess = () => {
   return {
-    type: actions.ADD_PROJECT_SUCCESS,
+    type: ProjectActions.ADD_PROJECT_SUCCESS,
   };
 };
 
 export const fetchProjectsFinished = () => {
   return {
-    type: actions.FETCH_PROJECTS_FINISHED,
+    type: ProjectActions.FETCH_PROJECTS_FINISHED,
   };
 };
 
 export const setProject = (project) => {
   return {
-    type: actions.SET_PROJECT,
+    type: ProjectActions.SET_PROJECT,
     project,
   };
 };
@@ -73,14 +73,14 @@ export const addNewProject = (project) => {
 
 export const projectDeleted = (projectId: number) => {
   return {
-    type: actions.PROJECT_DELETED,
+    type: ProjectActions.PROJECT_DELETED,
     projectId,
   };
 };
 
 export const deleteProjectFailed = (projectId: number) => {
   return {
-    type: actions.DELETE_PROJECT_FAILED,
+    type: ProjectActions.DELETE_PROJECT_FAILED,
     projectId,
   };
 };
@@ -102,7 +102,7 @@ export const deleteProject = (uniqueDbId: number) => {
 
 export const fetcProjectsStart = () => {
   return {
-    type: actions.FETCH_PROJECTS_START,
+    type: ProjectActions.FETCH_PROJECTS_START,
   };
 };
 

@@ -1,4 +1,4 @@
-import * as actions from '../actions/actionTypes';
+import {ProjectActions} from '../actions/actionTypes';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { updateObject } from '../utility';
 
@@ -56,19 +56,19 @@ const projectDeleted = (state, action) => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actions.SET_PROJECTS:
+    case ProjectActions.SET_PROJECTS:
       return setProjects(state, action);
-    case actions.FETCH_PROJECTS_FAILED:
+    case ProjectActions.FETCH_PROJECTS_FAILED:
       return fetchProjectsFailed(state, action);
-    case actions.SET_PROJECT:
+    case ProjectActions.SET_PROJECT:
       return setProject(state, action);
-    case actions.FETCH_PROJECTS_START:
+    case ProjectActions.FETCH_PROJECTS_START:
       return fetchProjectsStart(state, action);
-    case actions.FETCH_PROJECTS_FINISHED:
+    case ProjectActions.FETCH_PROJECTS_FINISHED:
       return fetchProjectFinished(state, action);
-    case actions.PROJECTS_EMPTY:
+    case ProjectActions.PROJECTS_EMPTY:
       return projectsEmpty(state, action);
-    case actions.PROJECT_DELETED:
+    case ProjectActions.PROJECT_DELETED:
       return projectDeleted(state, action);
     default:
       return state;
