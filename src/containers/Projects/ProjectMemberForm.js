@@ -23,7 +23,6 @@ const ProjectMemberForm = (props) => {
       </option>
     );
   });
-  console.log(membersOptionList);
 
   return (
     <Form>

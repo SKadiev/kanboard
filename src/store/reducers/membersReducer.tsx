@@ -1,48 +1,51 @@
-import {MemberActions}  from '../actions/actionTypes';
+import { MemberActions } from '../actions/actionTypes';
 import { updateObject } from '../utility';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
+interface InitialState {
+  members: string[];
+  loaded: boolean;
+  statusMessage: string;
+}
 
-
-const initialState = {
-
+const initialState: InitialState = {
   members: [],
   loaded: false,
   statusMessage: '',
 };
 
-const setMembers = (state, action) => {
+const setMembers = (state: InitialState, action) => {
   return updateObject(state, { members: action.members });
 };
 
-const fetchMembersFailed = (state, action) => {
+const fetchMembersFailed = (state: InitialState, action) => {
   return updateObject(state, { err: action.err });
 };
 
-const setMember = (state,action) => {
+const setMember = (state: InitialState, action) => {
   return updateObject(state, {
     members: [...state.members, action.member],
   });
 };
 
-const fetchMembersFinished = (state, action) => {
+const fetchMembersFinished = (state: InitialState, action) => {
   return updateObject(state, { loaded: true, statusMessage: '' });
 };
 
-const fetchMembersStart = (state, action) => {
+const fetchMembersStart = (state: InitialState, action) => {
   return updateObject(state, { loaded: false, statusMessage: <Spinner /> });
 };
 
-const membersEmpty = (state, action: {message:string}) => {
+const membersEmpty = (state: InitialState, action: { message: string }) => {
   return updateObject(state, { statusMessage: action.message });
 };
 
-const memberDeleted = (state, action) => {
-  let memberIndexForDelete:number = 0;
+const memberDeleted = (state: InitialState, action) => {
+  let memberIndexForDelete: number = 0;
   const membersList = [...state.members];
 
   for (let index = 0; index < membersList.length; index++) {
-    const element:any = membersList[index];
+    const element: any = membersList[index];
     if (element.uniqueDbId === action.memberId) {
       memberIndexForDelete = index;
       break;
@@ -56,7 +59,7 @@ const memberDeleted = (state, action) => {
   return updateObject(state, { members: listAfterRemove });
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (state: InitialState = initialState, action) => {
   switch (action.type) {
     case MemberActions.SET_MEMBERS:
       return setMembers(state, action);

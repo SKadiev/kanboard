@@ -1,46 +1,52 @@
-import {ProjectActions} from '../actions/actionTypes';
+import { ProjectActions } from '../actions/actionTypes';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { updateObject } from '../utility';
 
-const initialState  = {
+interface InitialState {
+  projects: string[];
+  loaded: boolean;
+  statusMessage: string;
+  err: any;
+}
+
+const initialState: InitialState = {
   projects: [],
   loaded: false,
   err: null,
-  statusMessage: null,
+  statusMessage: '',
 };
 
-
-const setProjects = (state, action) => {
+const setProjects = (state: InitialState, action) => {
   return updateObject(state, { projects: action.projects });
 };
 
-const setProject = (state, action) => {
+const setProject = (state: InitialState, action) => {
   return updateObject(state, {
     projects: [...state.projects, action.project],
   });
 };
 
-const fetchProjectsFailed = (state, action) => {
+const fetchProjectsFailed = (state: InitialState, action) => {
   return updateObject(state, { err: action.err });
 };
 
-const fetchProjectFinished = (state, action) => {
+const fetchProjectFinished = (state: InitialState, action) => {
   return updateObject(state, { loaded: true });
 };
 
-const fetchProjectsStart = (state, action) => {
+const fetchProjectsStart = (state: InitialState, action) => {
   return updateObject(state, { loaded: false, statusMessage: <Spinner /> });
 };
-const projectsEmpty = (state, action) => {
+const projectsEmpty = (state: InitialState, action) => {
   return updateObject(state, { statusMessage: action.message });
 };
 
-const projectDeleted = (state, action) => {
-  let projectIndexForDelete:number = -1;
+const projectDeleted = (state: InitialState, action) => {
+  let projectIndexForDelete: number = -1;
   const projectsList = [...state.projects];
 
   for (let index = 0; index < projectsList.length; index++) {
-    const element:any = projectsList[index];
+    const element: any = projectsList[index];
     if (element.uniqueDbId === action.projectId) {
       projectIndexForDelete = index;
       break;
@@ -54,7 +60,7 @@ const projectDeleted = (state, action) => {
   return updateObject(state, { projects: listAfterRemove });
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (state: InitialState = initialState, action) => {
   switch (action.type) {
     case ProjectActions.SET_PROJECTS:
       return setProjects(state, action);
