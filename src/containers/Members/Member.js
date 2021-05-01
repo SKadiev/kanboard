@@ -1,29 +1,36 @@
-import React from 'react';
-import { Card , Image} from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { deleteMember } from '../../store/actions/';
-import { useDispatch, useSelector } from 'react-redux';
-import Button from '../../components/UI/Button/Button'
+import { useDispatch } from 'react-redux';
+import Button from '../../components/UI/Button/Button';
+import PropTypes from 'prop-types';
 
-const Member = (props) => {
+const Member = ({ img, name, role, uniqueDbId }) => {
   const dispatch = useDispatch();
- 
+
   return (
     <Card style={{ width: '18rem' }}>
-      <Card.Img src={props.img} />
+      <Card.Img src={img} />
       <Card.Body>
-        <Card.Title>{props.name}</Card.Title>
+        <Card.Title>{name}</Card.Title>
         <Card.Text>
-            <strong>Member role : {props.role.toUpperCase()}</strong>
+          <strong>Member role : {role.toUpperCase()}</strong>
         </Card.Text>
         <Button variant="primary" value="Member info" />
         <Button
-          clicked={() => dispatch(deleteMember(props.uniqueDbId))}
+          clicked={() => dispatch(deleteMember(uniqueDbId))}
           value="Delete Member"
           variant="danger"
         />
       </Card.Body>
     </Card>
   );
+};
+
+Member.propTypes = {
+  img: PropTypes.string,
+  name: PropTypes.string,
+  role: PropTypes.string,
+  uniqueDbId: PropTypes.string,
 };
 
 export default Member;

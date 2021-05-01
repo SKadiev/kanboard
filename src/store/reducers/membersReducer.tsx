@@ -15,29 +15,37 @@ const initialState: InitialState = {
 };
 
 const setMembers = (state: InitialState, action) => {
-  return updateObject(state, { members: action.members });
+  return updateObject<InitialState, object>(state, { members: action.members });
 };
 
 const fetchMembersFailed = (state: InitialState, action) => {
-  return updateObject(state, { err: action.err });
+  return updateObject<InitialState, object>(state, { err: action.err });
 };
 
 const setMember = (state: InitialState, action) => {
-  return updateObject(state, {
+  return updateObject<InitialState, object>(state, {
     members: [...state.members, action.member],
   });
 };
 
 const fetchMembersFinished = (state: InitialState, action) => {
-  return updateObject(state, { loaded: true, statusMessage: '' });
+  return updateObject<InitialState, object>(state, {
+    loaded: true,
+    statusMessage: '',
+  });
 };
 
 const fetchMembersStart = (state: InitialState, action) => {
-  return updateObject(state, { loaded: false, statusMessage: <Spinner /> });
+  return updateObject<InitialState, object>(state, {
+    loaded: false,
+    statusMessage: <Spinner />,
+  });
 };
 
 const membersEmpty = (state: InitialState, action: { message: string }) => {
-  return updateObject(state, { statusMessage: action.message });
+  return updateObject<InitialState, object>(state, {
+    statusMessage: action.message,
+  });
 };
 
 const memberDeleted = (state: InitialState, action) => {
@@ -56,7 +64,9 @@ const memberDeleted = (state: InitialState, action) => {
 
   const listAfterRemove = [...membersList];
 
-  return updateObject(state, { members: listAfterRemove });
+  return updateObject<InitialState, object>(state, {
+    members: listAfterRemove,
+  });
 };
 
 const reducer = (state: InitialState = initialState, action) => {

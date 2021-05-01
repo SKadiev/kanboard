@@ -17,28 +17,35 @@ const initialState: InitialState = {
 };
 
 const setProjects = (state: InitialState, action) => {
-  return updateObject(state, { projects: action.projects });
+  return updateObject<InitialState, object>(state, {
+    projects: action.projects,
+  });
 };
 
 const setProject = (state: InitialState, action) => {
-  return updateObject(state, {
+  return updateObject<InitialState, object>(state, {
     projects: [...state.projects, action.project],
   });
 };
 
 const fetchProjectsFailed = (state: InitialState, action) => {
-  return updateObject(state, { err: action.err });
+  return updateObject<InitialState, object>(state, { err: action.err });
 };
 
 const fetchProjectFinished = (state: InitialState, action) => {
-  return updateObject(state, { loaded: true });
+  return updateObject<InitialState, object>(state, { loaded: true });
 };
 
 const fetchProjectsStart = (state: InitialState, action) => {
-  return updateObject(state, { loaded: false, statusMessage: <Spinner /> });
+  return updateObject<InitialState, object>(state, {
+    loaded: false,
+    statusMessage: <Spinner />,
+  });
 };
 const projectsEmpty = (state: InitialState, action) => {
-  return updateObject(state, { statusMessage: action.message });
+  return updateObject<InitialState, object>(state, {
+    statusMessage: action.message,
+  });
 };
 
 const projectDeleted = (state: InitialState, action) => {
@@ -57,7 +64,9 @@ const projectDeleted = (state: InitialState, action) => {
 
   const listAfterRemove = [...projectsList];
 
-  return updateObject(state, { projects: listAfterRemove });
+  return updateObject<InitialState, object>(state, {
+    projects: listAfterRemove,
+  });
 };
 
 const reducer = (state: InitialState = initialState, action) => {

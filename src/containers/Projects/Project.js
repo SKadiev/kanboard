@@ -9,8 +9,9 @@ import MemberAvatar from '../../containers/Members/MemberAvatar';
 import ProjectMemberForm from '../../containers/Projects/ProjectMemberForm';
 import Modal from '../../components/UI/Modal/Modal';
 import { initMembers } from '../../store/actions/';
+import PropTypes from 'prop-types';
 
-const Project = (props) => {
+const Project = ({ name, uniqueDbId }) => {
   const [modalShow, setModalShow] = React.useState(false);
   const dispatch = useDispatch();
 
@@ -31,13 +32,13 @@ const Project = (props) => {
     if (members.length === 0) {
       dispatch(initMembers());
     }
-  }, [members]);
+  }, [members, dispatch]);
 
   return (
     <React.Fragment>
       <Card style={{ width: '18rem' }} className={styles.Project}>
         <Card.Body>
-          <Card.Title>{props.name}</Card.Title>
+          <Card.Title>{name}</Card.Title>
           <strong>Members</strong>
           {membersList}
           <Button
@@ -57,7 +58,7 @@ const Project = (props) => {
           )}
 
           <Button
-            clicked={() => dispatch(deleteProject(props.uniqueDbId))}
+            clicked={() => dispatch(deleteProject(uniqueDbId))}
             value="Delete Project"
             variant="danger"
           />
@@ -65,6 +66,11 @@ const Project = (props) => {
       </Card>
     </React.Fragment>
   );
+};
+
+Project.propTypes = {
+  name: PropTypes.string,
+  uniqueDbId: PropTypes.string,
 };
 
 export default Project;

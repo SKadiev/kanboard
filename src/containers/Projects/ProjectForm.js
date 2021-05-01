@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addNewProject } from '../../store/actions/';
 
 const ProjectForm = (props) => {
@@ -10,7 +10,7 @@ const ProjectForm = (props) => {
 
   const onSumbit = (event) => {
     event.preventDefault();
-    dispatch(addNewProject( projectNameValue));
+    dispatch(addNewProject(projectNameValue));
   };
 
   return (

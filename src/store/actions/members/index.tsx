@@ -1,8 +1,7 @@
-import {MemberActions} from '../actionTypes';
+import { MemberActions } from '../actionTypes';
 import axios from '../../../axios';
-import { fetchProjectsFailed } from '../projects';
 
-export const setMembers = (members:any) => {
+export const setMembers = (members: any) => {
   return {
     type: MemberActions.SET_MEMBERS,
     members,
@@ -115,9 +114,11 @@ export const initMembers = () => {
         if (response.data) {
           const membersListValues = Object.values(response.data);
           const membersListUniqueIds = Object.keys(response.data);
-          const newListOfMembers = membersListValues.map((member: any, index) => {
-            return { ...member, uniqueDbId: membersListUniqueIds[index] };
-          });
+          const newListOfMembers = membersListValues.map(
+            (member: any, index) => {
+              return { ...member, uniqueDbId: membersListUniqueIds[index] };
+            }
+          );
           dispatch(setMembers(newListOfMembers));
         } else {
           dispatch(fetchMembersFailed(new Error('Fetch members Fail')));

@@ -1,9 +1,5 @@
-import React, { useState } from 'react';
-import Modal from '../../components/UI/Modal/Modal';
-import Button from '../../components/UI/Button/Button';
+import React from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
-import ReactDOM from 'react-dom';
-import styles from './Projects.module.css';
 
 const LayoutComponentGenerator = (Component, componentPayload) => {
   const generateRow = (columnList, id) => {
@@ -18,7 +14,7 @@ const LayoutComponentGenerator = (Component, componentPayload) => {
         rowsOrderedList.push(
           generateRow(
             <Col key={component.name + index} md={{ span: 6 }}>
-                <Component {...component} />
+              <Component {...component} />
             </Col>,
             component.name + index
           )
@@ -32,7 +28,7 @@ const LayoutComponentGenerator = (Component, componentPayload) => {
         rowsOrderedList.push(
           generateRow(
             <Col key={component.name + index} md={{ span: 6 }}>
-                <Component {...component} />
+              <Component {...component} />
             </Col>,
             component.name + index
           )
@@ -41,12 +37,11 @@ const LayoutComponentGenerator = (Component, componentPayload) => {
         rowsOrderedList[index - 1] = generateRow(
           [
             <Col key={component.name + (index - 1)}>
-                <Component {...components[index - 1]} />
-              
+              <Component {...components[index - 1]} />
             </Col>,
             <Col key={component.name + index}>
-                <Component {...component} />
-            </Col>
+              <Component {...component} />
+            </Col>,
           ],
           component.name + index
         );

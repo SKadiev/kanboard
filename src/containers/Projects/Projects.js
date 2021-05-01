@@ -19,7 +19,7 @@ const Projects = (props) => {
 
   useEffect(() => {
     dispatch(initProjects());
-  }, []);
+  }, [dispatch]);
 
   let projectsOutput = useLayoutComponentGenerator(
     Project,

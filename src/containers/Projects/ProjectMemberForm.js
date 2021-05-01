@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
-import { addNewMember, setMembers } from '../../store/actions/';
-import MemberAvatar from '../Members/MemberAvatar';
-import MemberForm from '../Members/MemberForm';
+import { useSelector } from 'react-redux';
+
 const ProjectMemberForm = (props) => {
   const [member, setMember] = useState(null);
-  const dispatch = useDispatch();
   const members = useSelector((state) => {
     return state.membersState.members;
   });
