@@ -1,54 +1,60 @@
 import { MemberActions } from '../actions/actionTypes';
 import { updateObject } from '../utility';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import { MemberType } from '../../containers/Members/Member';
 
-interface InitialState {
-  members: string[];
+export interface InitialMembersState {
+  members: MemberType[];
   loaded: boolean;
   statusMessage: string;
 }
 
-const initialState: InitialState = {
+const InitialMembersState: InitialMembersState = {
   members: [],
   loaded: false,
   statusMessage: '',
 };
 
-const setMembers = (state: InitialState, action) => {
-  return updateObject<InitialState, object>(state, { members: action.members });
+const setMembers = (state: InitialMembersState, action) => {
+  return updateObject<InitialMembersState, object>(state, {
+    members: action.members,
+  });
 };
 
-const fetchMembersFailed = (state: InitialState, action) => {
-  return updateObject<InitialState, object>(state, { err: action.err });
+const fetchMembersFailed = (state: InitialMembersState, action) => {
+  return updateObject<InitialMembersState, object>(state, { err: action.err });
 };
 
-const setMember = (state: InitialState, action) => {
-  return updateObject<InitialState, object>(state, {
+const setMember = (state: InitialMembersState, action) => {
+  return updateObject<InitialMembersState, object>(state, {
     members: [...state.members, action.member],
   });
 };
 
-const fetchMembersFinished = (state: InitialState, action) => {
-  return updateObject<InitialState, object>(state, {
+const fetchMembersFinished = (state: InitialMembersState, action) => {
+  return updateObject<InitialMembersState, object>(state, {
     loaded: true,
     statusMessage: '',
   });
 };
 
-const fetchMembersStart = (state: InitialState, action) => {
-  return updateObject<InitialState, object>(state, {
+const fetchMembersStart = (state: InitialMembersState, action) => {
+  return updateObject<InitialMembersState, object>(state, {
     loaded: false,
     statusMessage: <Spinner />,
   });
 };
 
-const membersEmpty = (state: InitialState, action: { message: string }) => {
-  return updateObject<InitialState, object>(state, {
+const membersEmpty = (
+  state: InitialMembersState,
+  action: { message: string }
+) => {
+  return updateObject<InitialMembersState, object>(state, {
     statusMessage: action.message,
   });
 };
 
-const memberDeleted = (state: InitialState, action) => {
+const memberDeleted = (state: InitialMembersState, action) => {
   let memberIndexForDelete: number = 0;
   const membersList = [...state.members];
 
@@ -64,12 +70,12 @@ const memberDeleted = (state: InitialState, action) => {
 
   const listAfterRemove = [...membersList];
 
-  return updateObject<InitialState, object>(state, {
+  return updateObject<InitialMembersState, object>(state, {
     members: listAfterRemove,
   });
 };
 
-const reducer = (state: InitialState = initialState, action) => {
+const reducer = (state: InitialMembersState = InitialMembersState, action) => {
   switch (action.type) {
     case MemberActions.SET_MEMBERS:
       return setMembers(state, action);

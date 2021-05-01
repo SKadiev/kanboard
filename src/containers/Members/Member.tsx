@@ -1,10 +1,17 @@
 import { Card } from 'react-bootstrap';
-import { deleteMember } from '../../store/actions/';
+import { deleteMember } from '../../store/actions';
 import { useDispatch } from 'react-redux';
 import Button from '../../components/UI/Button/Button';
 import PropTypes from 'prop-types';
 
-const Member = ({ img, name, role, uniqueDbId }) => {
+export type MemberType = {
+  img: string;
+  name: string;
+  role: string;
+  uniqueDbId: number;
+};
+
+const Member = ({ img, name, role, uniqueDbId }: MemberType) => {
   const dispatch = useDispatch();
 
   return (

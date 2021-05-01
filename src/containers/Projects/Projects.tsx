@@ -3,17 +3,18 @@ import ProjectForm from './ProjectForm';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useLayoutComponentGenerator from '../../hooks/use-layoutContainerGenerator';
+import { RootState } from '../..';
 
-import { initProjects } from '../../store/actions/';
+import { initProjects } from '../../store/actions';
 
 const Projects = (props) => {
   const dispatch = useDispatch();
 
-  const projects = useSelector((state) => {
+  const projects = useSelector((state: RootState) => {
     return state.projectsState.projects;
   });
 
-  const statusMessage = useSelector((state) => {
+  const statusMessage = useSelector((state: RootState) => {
     return state.projectsState.statusMessage;
   });
 

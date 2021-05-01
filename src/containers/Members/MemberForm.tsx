@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { addNewMember, setMembers } from '../../store/actions/';
+import { addNewMember, setMembers } from '../../store/actions';
 import logo from '../../assets/logo192.png';
 
 const MemberForm = (props) => {

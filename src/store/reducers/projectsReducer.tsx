@@ -2,53 +2,53 @@ import { ProjectActions } from '../actions/actionTypes';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { updateObject } from '../utility';
 
-interface InitialState {
+export interface InitialProjectsState {
   projects: string[];
   loaded: boolean;
   statusMessage: string;
   err: any;
 }
 
-const initialState: InitialState = {
+const InitialProjectsState: InitialProjectsState = {
   projects: [],
   loaded: false,
   err: null,
   statusMessage: '',
 };
 
-const setProjects = (state: InitialState, action) => {
-  return updateObject<InitialState, object>(state, {
+const setProjects = (state: InitialProjectsState, action) => {
+  return updateObject<InitialProjectsState, object>(state, {
     projects: action.projects,
   });
 };
 
-const setProject = (state: InitialState, action) => {
-  return updateObject<InitialState, object>(state, {
+const setProject = (state: InitialProjectsState, action) => {
+  return updateObject<InitialProjectsState, object>(state, {
     projects: [...state.projects, action.project],
   });
 };
 
-const fetchProjectsFailed = (state: InitialState, action) => {
-  return updateObject<InitialState, object>(state, { err: action.err });
+const fetchProjectsFailed = (state: InitialProjectsState, action) => {
+  return updateObject<InitialProjectsState, object>(state, { err: action.err });
 };
 
-const fetchProjectFinished = (state: InitialState, action) => {
-  return updateObject<InitialState, object>(state, { loaded: true });
+const fetchProjectFinished = (state: InitialProjectsState, action) => {
+  return updateObject<InitialProjectsState, object>(state, { loaded: true });
 };
 
-const fetchProjectsStart = (state: InitialState, action) => {
-  return updateObject<InitialState, object>(state, {
+const fetchProjectsStart = (state: InitialProjectsState, action) => {
+  return updateObject<InitialProjectsState, object>(state, {
     loaded: false,
     statusMessage: <Spinner />,
   });
 };
-const projectsEmpty = (state: InitialState, action) => {
-  return updateObject<InitialState, object>(state, {
+const projectsEmpty = (state: InitialProjectsState, action) => {
+  return updateObject<InitialProjectsState, object>(state, {
     statusMessage: action.message,
   });
 };
 
-const projectDeleted = (state: InitialState, action) => {
+const projectDeleted = (state: InitialProjectsState, action) => {
   let projectIndexForDelete: number = -1;
   const projectsList = [...state.projects];
 
@@ -64,12 +64,15 @@ const projectDeleted = (state: InitialState, action) => {
 
   const listAfterRemove = [...projectsList];
 
-  return updateObject<InitialState, object>(state, {
+  return updateObject<InitialProjectsState, object>(state, {
     projects: listAfterRemove,
   });
 };
 
-const reducer = (state: InitialState = initialState, action) => {
+const reducer = (
+  state: InitialProjectsState = InitialProjectsState,
+  action
+) => {
   switch (action.type) {
     case ProjectActions.SET_PROJECTS:
       return setProjects(state, action);
