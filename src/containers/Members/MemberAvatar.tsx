@@ -1,11 +1,11 @@
 import { MemberType } from './Member';
 import styles from './MemberAvatar.module.css';
 
-const MemberAvatar = ({ member }: MemberType) => {
+const MemberAvatar: React.FC<MemberType> = ({ img, name }) => {
   return (
     <span className={styles.MemberAvatar}>
-      {member.name}
-      <img src={member.img} alt={member.name} />
+      {name}
+      <img src={img} alt={name} />
     </span>
   );
 };

@@ -1,17 +1,15 @@
 import './App.css';
 import Navigation from './components/Navigation/Navigation';
 import Home from './containers/Home/Home';
-import React, {Suspense} from 'react';
+import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Spinner from './components/UI/Spinner/Spinner'
-
-
+import Spinner from './components/UI/Spinner/Spinner';
 
 const Projects = React.lazy(() => import('./containers/Projects/Projects'));
-const Members = React.lazy(() => import('./containers/Members/Members'))
+const Members = React.lazy(() => import('./containers/Members/Members'));
 
 // show props and onHile
-function App() {
+const App: React.FC = () => {
   const [navigationItems, setNavigationItems] = React.useState([
     { title: 'members', href: '/members' },
     { title: 'projects', href: '/projects' },
@@ -20,15 +18,15 @@ function App() {
   return (
     <React.Fragment>
       <Suspense fallback={<Spinner />}>
-      <Navigation navTitle="Kanboard" navItems={navigationItems}></Navigation>
-      <Switch>
-        <Route path="/projects" component={Projects} />
-        <Route path="/members" component={Members} />
-        <Route path="/" exact component={Home} />
-      </Switch>
+        <Navigation navTitle="Kanboard" navItems={navigationItems}></Navigation>
+        <Switch>
+          <Route path="/projects" component={Projects} />
+          <Route path="/members" component={Members} />
+          <Route path="/" exact component={Home} />
+        </Switch>
       </Suspense>
     </React.Fragment>
   );
-}
+};
 
 export default App;

@@ -1,8 +1,7 @@
 import React from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
+import { GlobalComponentType } from '../..';
 import Project from '../../containers/Projects/Project';
-
-type GridComponent = string | number;
 
 const LayoutComponentGenerator = (Component, componentPayload) => {
   const generateRow = (columnList, id) => {

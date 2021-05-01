@@ -1,5 +1,6 @@
 import { MemberActions } from '../actionTypes';
 import axios from '../../../axios';
+import { MemberType } from '../../../containers/Members/Member';
 
 export const setMembers = (members: any) => {
   return {
@@ -28,7 +29,7 @@ export const fetchMembersStart = () => {
   };
 };
 
-export const setMember = (member: any) => {
+export const setMember = (member: MemberType) => {
   return {
     type: MemberActions.SET_MEMBER,
     member,
@@ -70,7 +71,7 @@ export const addNewMember = (member) => {
       .then((response) => {
         if (response.data) {
           dispatch(
-            setMember({ ...memberData, uniqueDbId: response.data.name })
+            setMember({ ...memberData, uniqueDbId: +response.data.name })
           );
         } else {
           dispatch(addMemberFailed(new Error('Cant add member')));

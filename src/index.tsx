@@ -11,6 +11,8 @@ import membersReducer from './store/reducers/membersReducer';
 import projectsReducer from './store/reducers/projectsReducer';
 import thunk from 'redux-thunk';
 
+export interface GlobalComponentType {}
+
 declare global {
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
@@ -40,6 +42,8 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+export type RootState = ReturnType<typeof rootReducer>;
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

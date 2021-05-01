@@ -1,19 +1,21 @@
 import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { RootState } from '../..';
+import { MemberType } from '../Members/Member';
 
-const ProjectMemberForm = (props) => {
-  const [member, setMember] = useState(null);
-  const members = useSelector((state) => {
+const ProjectMemberForm: React.FC = (props) => {
+  const [member, setMember] = useState('');
+  const members = useSelector((state: RootState): MemberType[] => {
     return state.membersState.members;
   });
   const onSumbit = (event) => {
     event.preventDefault();
   };
 
-  let membersOptionList = [];
+  let membersOptionList: any[];
 
-  membersOptionList = members.map((member, index) => {
+  membersOptionList = members.map((member: MemberType, index) => {
     return (
       <option key={member.name + index} value={member.name}>
         {member.name}
@@ -30,7 +32,8 @@ const ProjectMemberForm = (props) => {
           <Form.Label>Member Select</Form.Label>
           <Form.Control
             onChange={(e) => {
-              setMember(e.target.value);
+              let element = e.target as HTMLInputElement;
+              setMember(element.value);
             }}
             as="select"
             custom

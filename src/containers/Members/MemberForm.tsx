@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { addNewMember, setMembers } from '../../store/actions';
 import logo from '../../assets/logo192.png';
 
-const MemberForm = (props) => {
+const MemberForm: React.FC = (props) => {
   const [memberNameValue, setInputValue] = useState('');
   const [memberRoleValue, setMemberRoleValue] = useState('regular');
 

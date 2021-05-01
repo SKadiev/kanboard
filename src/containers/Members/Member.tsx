@@ -3,15 +3,22 @@ import { deleteMember } from '../../store/actions';
 import { useDispatch } from 'react-redux';
 import Button from '../../components/UI/Button/Button';
 import PropTypes from 'prop-types';
+import { GlobalComponentType } from '../..';
 
-export type MemberType = {
+export interface MemberType extends GlobalComponentType {
+  id?: number | string;
   img: string;
   name: string;
   role: string;
   uniqueDbId: number;
-};
+}
 
-const Member = ({ img, name, role, uniqueDbId }: MemberType) => {
+const Member: React.FC<MemberType> = ({
+  img,
+  name,
+  role,
+  uniqueDbId,
+}: MemberType) => {
   const dispatch = useDispatch();
 
   return (
@@ -31,13 +38,6 @@ const Member = ({ img, name, role, uniqueDbId }: MemberType) => {
       </Card.Body>
     </Card>
   );
-};
-
-Member.propTypes = {
-  img: PropTypes.string,
-  name: PropTypes.string,
-  role: PropTypes.string,
-  uniqueDbId: PropTypes.string,
 };
 
 export default Member;

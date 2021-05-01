@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Modal from '../components/UI/Modal/Modal';
 import Button from '../components/UI/Button/Button';
@@ -6,11 +5,16 @@ import LayoutComponentGenerator from '../hoc/LayoutComponentGenerator/LayoutComp
 import ReactDOM from 'react-dom';
 import { useState, useEffect } from 'react';
 import Spinner from '../components/UI/Spinner/Spinner';
+import { GlobalComponentType } from '..';
 
-const useLayoutComponentGenerator = (Component, ComponentForm, components, statusMessage) => {
+const useLayoutComponentGenerator = (
+  Component,
+  ComponentForm,
+  components: GlobalComponentType[],
+  statusMessage
+) => {
   const [componentOutput, setComponentOutput] = useState(<Spinner />);
   const [modalShow, setModalShow] = React.useState(false);
-
 
   useEffect(() => {
     setComponentOutput(
@@ -28,7 +32,7 @@ const useLayoutComponentGenerator = (Component, ComponentForm, components, statu
           >
             <ComponentForm />
           </Modal>,
-          document.getElementById('modal-content')
+          document.getElementById('modal-content')!
         )}
 
         {components.length !== 0 ? (
@@ -40,7 +44,6 @@ const useLayoutComponentGenerator = (Component, ComponentForm, components, statu
     );
   }, [Component, components, modalShow, statusMessage]);
 
-  
   return componentOutput;
 };
 

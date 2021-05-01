@@ -1,4 +1,4 @@
-import {ProjectActions} from '../actionTypes';
+import { ProjectActions } from '../actionTypes';
 import axios from '../../../axios';
 
 export const setProjects = (projects) => {
@@ -118,9 +118,11 @@ export const initProjects = () => {
         if (response.data) {
           const projectListValues = Object.values(response.data);
           const projectsListUniqueIds = Object.keys(response.data);
-          const newListOfProjects = projectListValues.map((project:any, index) => {
-            return { ...project, uniqueDbId: projectsListUniqueIds[index] };
-          });
+          const newListOfProjects = projectListValues.map(
+            (project: any, index) => {
+              return { ...project, uniqueDbId: projectsListUniqueIds[index] };
+            }
+          );
           dispatch(setProjects(newListOfProjects));
         } else {
           dispatch(fetchProjectsFailed(new Error('Fetch members Fail')));

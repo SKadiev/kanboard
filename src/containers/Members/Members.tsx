@@ -6,7 +6,7 @@ import { initMembers } from '../../store/actions';
 import useLayoutComponentGenerator from '../../hooks/use-layoutContainerGenerator';
 import { RootState } from '../..';
 
-const Members = (props) => {
+const Members: React.FC = (props) => {
   const dispatch = useDispatch();
   const members = useSelector((state: RootState) => {
     return state.membersState.members;
