@@ -4,8 +4,6 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import useLayoutComponentGenerator from '../../hooks/use-layoutContainerGenerator';
 import { RootState } from '../..';
-
-import { initProjects } from '../../store/actions';
 import { useActions } from '../../hooks/useActions';
 
 const Projects = (props) => {
@@ -20,7 +18,7 @@ const Projects = (props) => {
 
   useEffect(() => {
     initProjects();
-  }, [initProjects]);
+  }, []);
 
   let projectsOutput = useLayoutComponentGenerator(
     Project,
