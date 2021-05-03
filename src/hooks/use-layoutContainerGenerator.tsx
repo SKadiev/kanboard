@@ -13,7 +13,9 @@ const useLayoutComponentGenerator = (
   components: GlobalComponentType[],
   statusMessage
 ) => {
-  const [componentOutput, setComponentOutput] = useState(<Spinner />);
+  const [componentOutput, setComponentOutput] = useState<JSX.Element>(
+    <Spinner />
+  );
   const [modalShow, setModalShow] = React.useState(false);
 
   useEffect(() => {

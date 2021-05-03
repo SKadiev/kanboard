@@ -1,12 +1,18 @@
 import { ProjectActions } from '../actions/actionTypes';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { updateObject } from '../utility';
+import { ProjectType } from '../../containers/Projects/Project';
 
 export interface InitialProjectsState {
   projects: string[];
   loaded: boolean;
   statusMessage: string;
   err: any;
+}
+
+interface SetProjectsAction {
+  type: ProjectActions.SET_PROJECTS;
+  projects: ProjectType[];
 }
 
 const InitialProjectsState: InitialProjectsState = {
@@ -16,7 +22,10 @@ const InitialProjectsState: InitialProjectsState = {
   statusMessage: '',
 };
 
-const setProjects = (state: InitialProjectsState, action) => {
+const setProjects = (
+  state: InitialProjectsState,
+  action: SetProjectsAction
+) => {
   return updateObject<InitialProjectsState, object>(state, {
     projects: action.projects,
   });
@@ -72,7 +81,7 @@ const projectDeleted = (state: InitialProjectsState, action) => {
 const reducer = (
   state: InitialProjectsState = InitialProjectsState,
   action
-) => {
+): InitialProjectsState => {
   switch (action.type) {
     case ProjectActions.SET_PROJECTS:
       return setProjects(state, action);

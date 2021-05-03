@@ -9,7 +9,7 @@ const MemberForm: React.FC = (props) => {
   const [memberRoleValue, setMemberRoleValue] = useState('regular');
 
   const dispatch = useDispatch();
-  const onSumbit = (event) => {
+  const onSumbit = (event: React.FormEvent) => {
     event.preventDefault();
     const memberData = {
       name: memberNameValue,

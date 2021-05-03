@@ -9,6 +9,11 @@ export interface InitialMembersState {
   statusMessage: string;
 }
 
+interface Action {
+  type: MemberActions;
+  payload?: any;
+}
+
 const InitialMembersState: InitialMembersState = {
   members: [],
   loaded: false,
@@ -45,10 +50,7 @@ const fetchMembersStart = (state: InitialMembersState, action) => {
   });
 };
 
-const membersEmpty = (
-  state: InitialMembersState,
-  action: { message: string }
-) => {
+const membersEmpty = (state: InitialMembersState, action) => {
   return updateObject<InitialMembersState, object>(state, {
     statusMessage: action.message,
   });
@@ -75,7 +77,10 @@ const memberDeleted = (state: InitialMembersState, action) => {
   });
 };
 
-const reducer = (state: InitialMembersState = InitialMembersState, action) => {
+const reducer = (
+  state: InitialMembersState = InitialMembersState,
+  action: Action
+): InitialMembersState => {
   switch (action.type) {
     case MemberActions.SET_MEMBERS:
       return setMembers(state, action);
