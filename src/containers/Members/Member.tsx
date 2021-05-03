@@ -1,8 +1,6 @@
 import { Card } from 'react-bootstrap';
-import { deleteMember } from '../../store/actions';
-import { useDispatch } from 'react-redux';
+import { useActions } from './../../hooks/useActions';
 import Button from '../../components/UI/Button/Button';
-import PropTypes from 'prop-types';
 import { GlobalComponentType } from '../..';
 
 export interface MemberType extends GlobalComponentType {
@@ -19,8 +17,7 @@ const Member: React.FC<MemberType> = ({
   role,
   uniqueDbId,
 }: MemberType) => {
-  const dispatch = useDispatch();
-
+  const { deleteMember } = useActions();
   return (
     <Card style={{ width: '18rem' }}>
       <Card.Img src={img} />
@@ -31,7 +28,7 @@ const Member: React.FC<MemberType> = ({
         </Card.Text>
         <Button variant="primary" value="Member info" />
         <Button
-          clicked={() => dispatch(deleteMember(uniqueDbId))}
+          clicked={() => deleteMember(uniqueDbId)}
           value="Delete Member"
           variant="danger"
         />

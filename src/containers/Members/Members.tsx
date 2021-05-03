@@ -1,13 +1,13 @@
 import Member from './Member';
 import MemberForm from './MemberForm';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { initMembers } from '../../store/actions';
+import { useSelector } from 'react-redux';
 import useLayoutComponentGenerator from '../../hooks/use-layoutContainerGenerator';
 import { RootState } from '../..';
+import { useActions } from './../../hooks/useActions';
 
 const Members: React.FC = (props) => {
-  const dispatch = useDispatch();
+  const { initMembers } = useActions();
   const members = useSelector((state: RootState) => {
     return state.membersState.members;
   });
@@ -17,8 +17,8 @@ const Members: React.FC = (props) => {
   });
 
   useEffect(() => {
-    dispatch(initMembers());
-  }, [dispatch]);
+    initMembers();
+  }, []);
 
   let membersOutput = useLayoutComponentGenerator(
     Member,

@@ -1,15 +1,15 @@
 import Project from './Project';
 import ProjectForm from './ProjectForm';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import useLayoutComponentGenerator from '../../hooks/use-layoutContainerGenerator';
 import { RootState } from '../..';
 
 import { initProjects } from '../../store/actions';
+import { useActions } from '../../hooks/useActions';
 
 const Projects = (props) => {
-  const dispatch = useDispatch();
-
+  const { initProjects } = useActions();
   const projects = useSelector((state: RootState) => {
     return state.projectsState.projects;
   });
@@ -19,8 +19,8 @@ const Projects = (props) => {
   });
 
   useEffect(() => {
-    dispatch(initProjects());
-  }, [dispatch]);
+    initProjects();
+  }, [initProjects]);
 
   let projectsOutput = useLayoutComponentGenerator(
     Project,

@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteProject } from '../../store/actions/';
+import { useSelector } from 'react-redux';
 import styles from './Project.module.css';
 import Button from '../../components/UI/Button/Button';
 import { Card } from 'react-bootstrap';
 import MemberAvatar from '../../containers/Members/MemberAvatar';
 import ProjectMemberForm from '../../containers/Projects/ProjectMemberForm';
 import Modal from '../../components/UI/Modal/Modal';
-import { initMembers } from '../../store/actions/';
 import { RootState } from '../..';
 import { MemberType } from '../Members/Member';
+import { useActions } from '../../hooks/useActions';
 
 export type ProjectType = {
   id?: number;
@@ -20,7 +19,7 @@ export type ProjectType = {
 
 const Project: React.FC<ProjectType> = ({ name, uniqueDbId }: ProjectType) => {
   const [modalShow, setModalShow] = React.useState(false);
-  const dispatch = useDispatch();
+  const { deleteProject, initMembers } = useActions();
 
   const members: MemberType[] = useSelector(
     (state: RootState) => state.membersState.members
@@ -39,9 +38,9 @@ const Project: React.FC<ProjectType> = ({ name, uniqueDbId }: ProjectType) => {
 
   useEffect(() => {
     if (members.length === 0) {
-      dispatch(initMembers());
+      initMembers();
     }
-  }, [members, dispatch]);
+  }, [members, initMembers]);
 
   return (
     <React.Fragment>
@@ -67,7 +66,7 @@ const Project: React.FC<ProjectType> = ({ name, uniqueDbId }: ProjectType) => {
           )}
 
           <Button
-            clicked={() => dispatch(deleteProject(uniqueDbId))}
+            clicked={() => deleteProject(uniqueDbId)}
             value="Delete Project"
             variant="danger"
           />

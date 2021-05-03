@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { addNewMember, setMembers } from '../../store/actions';
 import logo from '../../assets/logo192.png';
+import { useActions } from '../../hooks/useActions';
 
 const MemberForm: React.FC = (props) => {
   const [memberNameValue, setInputValue] = useState('');
   const [memberRoleValue, setMemberRoleValue] = useState('regular');
+  const { addNewMember } = useActions();
 
-  const dispatch = useDispatch();
   const onSumbit = (event: React.FormEvent) => {
     event.preventDefault();
     const memberData = {
@@ -17,7 +16,7 @@ const MemberForm: React.FC = (props) => {
       img: logo,
     };
 
-    dispatch(addNewMember(memberData));
+    addNewMember(memberData);
   };
 
   return (
