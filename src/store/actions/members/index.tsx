@@ -1,8 +1,13 @@
-import { MemberActions } from '../actionTypes';
+import {
+  AddMemberFailedCreator,
+  MemberActions,
+  SetMemberCreator,
+} from '../actionTypes';
 import axios from '../../../axios';
 import { MemberType } from '../../../containers/Members/Member';
+import { Dispatch } from 'react';
 
-export const setMembers = (members: any) => {
+export const setMembers = (members: MemberType[]) => {
   return {
     type: MemberActions.SET_MEMBERS,
     members,
@@ -29,14 +34,14 @@ export const fetchMembersStart = () => {
   };
 };
 
-export const setMember = (member: MemberType) => {
+export const setMember = (member: MemberType): SetMemberCreator => {
   return {
     type: MemberActions.SET_MEMBER,
     member,
   };
 };
 
-export const addMemberFailed = (err) => {
+export const addMemberFailed = (err: Error): AddMemberFailedCreator => {
   return {
     type: MemberActions.ADD_MEMBER_FAILED,
     err,
@@ -65,7 +70,7 @@ export const addNewMember = (member) => {
     img: member.img,
   };
 
-  return (dispatch) => {
+  return (dispatch: Dispatch<SetMemberCreator | AddMemberFailedCreator>) => {
     axios
       .post('/members.json', JSON.stringify(memberData))
       .then((response) => {
