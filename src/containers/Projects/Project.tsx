@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { useSelector } from 'react-redux';
 import styles from './Project.module.css';
 import Button from '../../components/UI/Button/Button';
 import { Card } from 'react-bootstrap';
 import MemberAvatar from '../../containers/Members/MemberAvatar';
 import ProjectMemberForm from '../../containers/Projects/ProjectMemberForm';
 import Modal from '../../components/UI/Modal/Modal';
-import { RootState } from '../..';
 import { MemberType } from '../Members/Member';
 import { useActions } from '../../hooks/useActions';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 export type ProjectType = {
   id?: number;
@@ -21,8 +20,8 @@ const Project: React.FC<ProjectType> = ({ name, uniqueDbId }: ProjectType) => {
   const [modalShow, setModalShow] = React.useState(false);
   const { deleteProject, initMembers } = useActions();
 
-  const members: MemberType[] = useSelector(
-    (state: RootState) => state.membersState.members
+  const members: MemberType[] = useTypedSelector(
+    (state) => state.membersState.members
   );
   let membersList = (
     <ul>

@@ -1,18 +1,16 @@
 import Member from './Member';
 import MemberForm from './MemberForm';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import useLayoutComponentGenerator from '../../hooks/use-layoutContainerGenerator';
-import { RootState } from '../..';
 import { useActions } from './../../hooks/useActions';
-
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 const Members: React.FC = (props) => {
   const { initMembers } = useActions();
-  const members = useSelector((state: RootState) => {
+  const members = useTypedSelector((state) => {
     return state.membersState.members;
   });
 
-  const statusMessage = useSelector((state: RootState) => {
+  const statusMessage = useTypedSelector((state) => {
     return state.membersState.statusMessage;
   });
 

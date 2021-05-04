@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { RootState } from '../..';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { MemberType } from '../Members/Member';
 
 const ProjectMemberForm: React.FC = (props) => {
   const [member, setMember] = useState('');
-  const members = useSelector((state: RootState): MemberType[] => {
+  const members = useTypedSelector((state) => {
     return state.membersState.members;
   });
   const onSumbit = (event) => {
